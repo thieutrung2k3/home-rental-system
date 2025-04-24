@@ -278,8 +278,8 @@ public class PropertyServiceImpl implements PropertyService {
         property.setOwner(owner);
         property.setCategory(category);
         property.setAddress(String.format("%s, %s, %s, %s",
-                location.getCountry(), location.getCity(),
-                location.getDistrict(), location.getWard()));
+                location.getWard(), location.getDistrict(),
+                location.getCity(), location.getCountry()));
         property.setIsAvailable(true);
         property.setIsFeatured(false);
 

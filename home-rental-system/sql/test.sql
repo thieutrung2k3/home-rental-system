@@ -14,6 +14,10 @@ WHERE property_id = 2;
 DELETE
 FROM property_viewing;
 
+UPDATE property
+SET is_available = false
+WHERE property_id = 1;
+
 CREATE TABLE invalidated_token
 (
     id          VARCHAR(255) PRIMARY KEY,

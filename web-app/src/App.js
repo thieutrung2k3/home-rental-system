@@ -19,6 +19,7 @@ import PropertyDetail from "./components/PropertyDetail/PropertyDetail";
 import PropertyList from "./components/PropertyList/PropertyList";
 import { isTokenExpired, logout, getAuthToken } from "./utils/auth";
 import "./App.css";
+import CreateProperty from "./components/Property/CreateProperty";
 
 // AuthChecker component - kiểm tra token hết hạn
 function AuthChecker({ children }) {
@@ -138,7 +139,7 @@ function App() {
             />
             <Route
               path='properties/add'
-              element={<div>Add Property</div>}
+              element={<CreateProperty />}
             />
             <Route
               path='rooms'
