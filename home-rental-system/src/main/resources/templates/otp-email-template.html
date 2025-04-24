@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác thực OTP</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .email-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #2a3f54;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .otp-container {
+            text-align: center;
+            margin: 35px 0;
+        }
+        .otp-code {
+            font-family: 'Courier New', monospace;
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            color: #2a3f54;
+            background-color: #f5f7fa;
+            padding: 15px 25px;
+            border-radius: 8px;
+            border: 1px dashed #cfd8dc;
+            display: inline-block;
+        }
+        .message {
+            margin-bottom: 30px;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-top: 30px;
+            border-left: 4px solid #ffd54f;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #78909c;
+            margin-top: 40px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        @media only screen and (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .email-container {
+                padding: 20px;
+            }
+            .otp-code {
+                font-size: 24px;
+                letter-spacing: 3px;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="header">
+        <!-- Logo có thể thay bằng URL thực của bạn -->
+        <img src="https://example.com/logo.png" alt="Home Rental System" class="logo">
+        <h1>Xác thực Email của bạn</h1>
+    </div>
+
+    <div class="message">
+        <p>Kính gửi <strong>{username}</strong>,</p>
+        <p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi. Để hoàn tất quá trình xác thực, vui lòng sử dụng mã OTP dưới đây:</p>
+    </div>
+
+    <div class="otp-container">
+        <div class="otp-code">{otpCode}</div>
+    </div>
+
+    <p>Mã này sẽ hết hạn sau <strong>10 phút</strong>. Vui lòng không chia sẻ mã này với bất kỳ ai.</p>
+
+    <p>Nếu bạn không yêu cầu mã OTP này, vui lòng bỏ qua email này hoặc liên hệ với bộ phận hỗ trợ khách hàng của chúng tôi.</p>
+
+    <div class="note">
+        <p><strong>Lưu ý:</strong> Đội ngũ của chúng tôi sẽ không bao giờ yêu cầu bạn chia sẻ mã OTP hoặc mật khẩu qua điện thoại hay email.</p>
+    </div>
+
+    <p style="text-align: center; margin-top: 30px;">
+        <a href="{loginUrl}" class="button">Quay lại đăng nhập</a>
+    </p>
+</div>
+
+<div class="footer">
+    <p>© 2023 Home Rental System. Tất cả các quyền được bảo lưu.</p>
+    <p>Địa chỉ: Konoha Village</p>
+    <p>Email hỗ trợ: <a href="mailto:support@homerentalsystem.com">support@homerentalsystem.com</a></p>
+</div>
+</body>
+</html>

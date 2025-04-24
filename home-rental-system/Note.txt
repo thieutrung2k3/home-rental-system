@@ -1,0 +1,72 @@
+-Owner -> category -> add location -> add amenity ->add property -> add image
+- Hàm delete và update property cần phải kiểm tra xem có ai đang thuê hay không.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public PropertyResponse createProperty(PropertyCreationRequest request) {
+        log.info("Starting to create property with request: {}", request);
+
+        // 1. Validate and get owner
+        Owner owner = ownerRepository.findById(request.getOwnerId())
+                .orElseThrow(() -> new ResourceNotFoundException("Owner not found with id: " + request.getOwnerId()));
+
+        // 2. Validate and get property category
+        PropertyCategory category = propertyCategoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Property category not found with id: " + request.getCategoryId()));
+
+        // 3. Save location first since it's a dependency
+        Location location = request.getLocation();
+        location = locationRepository.save(location);
+        log.debug("Saved location: {}", location);
+
+        // 4. Create and setup property
+        Property property = propertyMapper.toProperty(request);
+        property.setOwner(owner);
+        property.setCategory(category);
+        property.setLocation(location);
+
+        // 5. Handle amenities
+        Set<Amenity> amenities = new HashSet<>();
+        if (request.getAmenityIds() != null && !request.getAmenityIds().isEmpty()) {
+            amenities = new HashSet<>(amenityRepository.findAllById(request.getAmenityIds()));
+            if (amenities.size() != request.getAmenityIds().size()) {
+                throw new ResourceNotFoundException("Some amenities were not found");
+            }
+            property.setAmenities(amenities);
+        }
+
+        // 6. Save property first to get ID
+        property = propertyRepository.save(property);
+        log.debug("Saved property: {}", property);
+
+        // 7. Handle property images
+        if (request.getImages() != null && !request.getImages().isEmpty()) {
+            request.getImages().forEach(image -> {
+                image.setProperty(property);
+                propertyImageRepository.save(image);
+                log.debug("Saved property image: {}", image);
+            });
+        }
+
+        log.info("Successfully created property with id: {}", property.getPropertyId());
+        return propertyMapper.toPropertyResponse(property);
+    }

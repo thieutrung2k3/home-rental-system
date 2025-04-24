@@ -1,0 +1,77 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /api/v1
+
+spring:
+  websocket:
+    path: /ws
+  datasource:
+    url: "jdbc:mysql://localhost:3306/01-house-rental"
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: zeike2109@gmail.com
+    password: mwcc plaj hthi zntc
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            trust: smtp.gmail.com
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 25MB
+      max-request-size: 25MB
+  output:
+    ansi:
+      enabled: ALWAYS
+  kafka:
+    bootstrap-servers: localhost:9094
+    consumer:
+      group-id: renHome
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.value.default.type: com.kir.homerentalsystem.dto.request.SendSimpleEmailRequest
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+kafka:
+  topics:
+    otp: otp-topic-v1
+    notify: notify-topic-v1
+    register: register-topic-v1
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    csrf:
+      enabled: true
+
+jwt:
+  signerKey: "eHr30nG1PQoaJ6JucIPuRKmxyyOcMPs3hHNDaiSrqXKZiC5HneVjmiMxw12EE8eH"
+  valid-duration: 10000
+
+front-end:
+  login-api-url: http://localhost:3000/login
+  confirm-password-reset-url: http://localhost:3000/reset-password?email=
+
+
+

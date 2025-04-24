@@ -1,0 +1,31 @@
+.loginContainer {
+  padding: 0;
+  overflow: hidden;
+}
+
+.leftPanel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rightPanel {
+  background-size: cover;
+  background-position: center;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 600px) {
+  .loginContainer {
+    padding: 16px;
+  }
+  
+  .logo {
+    width: 100px;
+  }
+} 
