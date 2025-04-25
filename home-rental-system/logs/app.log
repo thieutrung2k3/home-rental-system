@@ -7404,3 +7404,7 @@ Caused by: org.springframework.security.oauth2.jwt.JwtException: Token invalid
 2025-04-24 17:44:23 INFO  [http-nio-8888-exec-3] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
 2025-04-24 17:44:23 INFO  [http-nio-8888-exec-3] c.k.h.config.CustomJwtDecoder - Token validation response: true
 2025-04-24 17:44:23 INFO  [http-nio-8888-exec-3] c.k.h.config.CustomJwtDecoder - Subject: t.hieutrung2k3@gmail.com
+<<<<<<< HEAD
+=======
+2025-04-24 17:51:33 INFO  [MessageBroker-1] o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[3 current WS(3)-HttpStream(0)-HttpPoll(0), 162 total, 10 closed abnormally (10 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(81)-CONNECTED(81)-DISCONNECT(26)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 1041], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 268], sockJsScheduler[pool size = 8, active threads = 1, queued tasks = 4, completed tasks = 3630]
+>>>>>>> 7be5df2b29808744be6298ca641f89d64976da84
