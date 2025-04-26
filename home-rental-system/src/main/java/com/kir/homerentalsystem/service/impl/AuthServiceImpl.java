@@ -7,17 +7,19 @@ import com.kir.homerentalsystem.dto.request.ValidateTokenRequest;
 import com.kir.homerentalsystem.dto.response.AccountResponse;
 import com.kir.homerentalsystem.dto.response.LoginResponse;
 import com.kir.homerentalsystem.dto.response.ValidateTokenResponse;
-import com.kir.homerentalsystem.entity.Account;
-import com.kir.homerentalsystem.entity.InvalidatedToken;
+import com.kir.homerentalsystem.entity.*;
 import com.kir.homerentalsystem.exception.AppException;
 import com.kir.homerentalsystem.exception.ErrorCode;
 import com.kir.homerentalsystem.mapper.AccountMapper;
 import com.kir.homerentalsystem.repository.AccountRepository;
 import com.kir.homerentalsystem.repository.InvalidatedTokenRepository;
+import com.kir.homerentalsystem.repository.PropertyRepository;
+import com.kir.homerentalsystem.repository.TenantRepository;
 import com.kir.homerentalsystem.service.AuthService;
 import com.kir.homerentalsystem.service.EmailService;
 import com.kir.homerentalsystem.util.AuthUtil;
 import com.kir.homerentalsystem.util.ValidationUtil;
+import com.kir.homerentalsystem.util.WordUtil;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -37,8 +39,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Objects;
@@ -54,6 +64,8 @@ public class AuthServiceImpl implements AuthService {
     private final EmailService emailService;
     private final AccountMapper accountMapper;
     private final RedisTemplate<String, Object> redisTemplate;
+    private final PropertyRepository propertyRepository;
+    private final TenantRepository tenantRepository;
 
     @NonFinal
     @Value("${jwt.valid-duration}")
@@ -68,8 +80,50 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void test() {
-        String id = AuthUtil.getAccountIdFromToken();
-        log.info("Account id: {}", id);
+        Property property = propertyRepository.findById(21L).orElseThrow(() -> new AppException(ErrorCode.PROPERTY_NOT_EXISTED));
+        Tenant tenant = tenantRepository.findById(5L).orElseThrow(() -> new AppException(ErrorCode.TENANT_NOT_EXISTED));
+        log.info("Property: {}", property);
+        Lease lease = Lease.builder()
+//                .leaseId(1L)
+                .property(property)
+                .tenant(tenant)
+                .startDate(LocalDate.now())
+                .endDate(LocalDate.now().plusDays(1))
+                .monthlyRent(property.getPricePerMonth())
+                .securityDeposit(property.getSecurityDeposit())
+                .leaseTerms("asifhasd")
+                .status("PENDING")
+                .build();
+        log.info("Lease: {}", lease);
+        ByteArrayInputStream bis = WordUtil.fillTemplate(lease);
+
+        try {
+            // Tạo thư mục nếu chưa tồn tại
+            String uploadDir = "uploads/leases";
+            Path uploadPath = Paths.get(uploadDir);
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            // Tạo tên file dựa trên thông tin hợp đồng
+            String fileName = "lease_" + lease.getLeaseId() + "_" + tenant.getTenantId() + "_" +
+                    LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ".docx";
+            Path filePath = uploadPath.resolve(fileName);
+
+            // Ghi file vào thư mục
+            Files.copy(bis, filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            System.out.println("File saved successfully: " + filePath.toString());
+        } catch (IOException e) {
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
+        } finally {
+            try {
+                bis.close();
+            } catch (IOException e) {
+                // Log error
+                System.err.println("Error closing ByteArrayInputStream: " + e.getMessage());
+            }
+        }
     }
 
     @Override

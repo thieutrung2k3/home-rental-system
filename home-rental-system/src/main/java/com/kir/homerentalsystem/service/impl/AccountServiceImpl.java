@@ -1,6 +1,7 @@
 package com.kir.homerentalsystem.service.impl;
 
 import com.kir.homerentalsystem.constant.AuthEmailType;
+import com.kir.homerentalsystem.constant.IdNumberType;
 import com.kir.homerentalsystem.constant.RoleConst;
 import com.kir.homerentalsystem.constant.VerificationStatus;
 import com.kir.homerentalsystem.dto.request.AccountCreationRequest;
@@ -38,6 +39,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,6 +92,7 @@ public class AccountServiceImpl implements AccountService {
         account.setRole(role);
         account.setIsActive(false);
         account.setPassword(passwordEncoder.encode(request.getPassword()));
+        account.setIdNumberType(IdNumberType.valueOf(request.getIdNumberType().toUpperCase()));
 
         accountRepository.save(account);
         AccountResponse accountResponse = new AccountResponse();
@@ -246,7 +249,6 @@ public class AccountServiceImpl implements AccountService {
         Long accountId = Long.valueOf(authentication.getName());
         accountRepository.deleteById(accountId);
 
-        // Clear authentication after deletion
         SecurityContextHolder.clearContext();
     }
 

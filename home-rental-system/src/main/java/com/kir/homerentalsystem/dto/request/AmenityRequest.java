@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AmenityRequest {
+    private Long amenityId;
     private String name;
-    private MultipartFile file;
     private String description;
 }

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatusCode;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
+    INVALID_KEY(1003, "Invalid message key", HttpStatus.BAD_REQUEST),
     EMAIL_EXISTED(9001, "Email đã tồn tại.", HttpStatus.BAD_REQUEST),
     ACCOUNT_NOT_EXISTED(9002, "Tài khoản không tồn tại.", HttpStatus.NOT_FOUND),
     CANNOT_GENERATE_TOKEN(9003, "Không thể tạo token.", HttpStatus.BAD_REQUEST),
@@ -36,6 +37,7 @@ public enum ErrorCode {
     CAN_NOT_SAVE_FILE(9026, "Có lỗi xảy ra khi lưu file.", HttpStatus.INTERNAL_SERVER_ERROR),
     PROPERTY_IS_NOT_AVAILABLE(9027, "Bất động sản này đã được cho thuê hoặc không có sẵn.", HttpStatus.BAD_REQUEST),
     PROPERTY_VIEWING_REQUEST_EXISTED(9028, "Yêu cầu xem nhà đã tồn tại.", HttpStatus.BAD_REQUEST),
+    ATTRIBUTE_INVALID(9029, "Thuộc tính không hợp lệ.", HttpStatus.BAD_REQUEST),
     UNCATEGORIZED_EXCEPTION(9999, "Lỗi không xác định", HttpStatus.INTERNAL_SERVER_ERROR);
     
     private int code;

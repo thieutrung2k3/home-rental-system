@@ -125,8 +125,8 @@ public class EmailServiceImpl implements EmailService {
                     throw new AppException(ErrorCode.SEND_OTP_FAILED);
                 }
 
-                // Lưu mã OTP vào Redis với thời gian hết hạn 5 phút
-                redisTemplate.opsForValue().set("otp_" + email, otpCode, Duration.ofMinutes(5));
+                // Lưu mã OTP vào Redis với thời gian hết hạn 10 phút
+                redisTemplate.opsForValue().set("otp_" + email, otpCode, Duration.ofMinutes(10));
 
             }
             case FORGOT_PASSWORD -> {

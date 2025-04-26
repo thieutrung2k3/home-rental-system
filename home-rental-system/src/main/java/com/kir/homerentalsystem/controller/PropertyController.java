@@ -28,8 +28,7 @@ public class PropertyController {
     @PostMapping(value = "/owner/createProperty", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ApiResponse<PropertyResponse> createProperty(
             @RequestParam("property") String propertyJson,
-            @RequestParam("propertyImages") List<MultipartFile> propertyImages,
-            @RequestParam("amenities") List<MultipartFile> amenities) throws JsonProcessingException {
+            @RequestParam("propertyImages") List<MultipartFile> propertyImages) throws JsonProcessingException {
 
         ObjectMapper objectMapper = new ObjectMapper();
         PropertyCreationRequest request = objectMapper.readValue(propertyJson, PropertyCreationRequest.class);
@@ -39,13 +38,6 @@ public class PropertyController {
                 request.getPropertyImages().size() == propertyImages.size()) {
             for (int i = 0; i < propertyImages.size(); i++) {
                 request.getPropertyImages().get(i).setFile(propertyImages.get(i));
-            }
-        }
-
-        if (request.getAmenities() != null && amenities != null &&
-                request.getAmenities().size() == amenities.size()) {
-            for (int i = 0; i < amenities.size(); i++) {
-                request.getAmenities().get(i).setFile(amenities.get(i));
             }
         }
 

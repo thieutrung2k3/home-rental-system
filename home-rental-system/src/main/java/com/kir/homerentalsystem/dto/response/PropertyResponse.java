@@ -23,9 +23,6 @@ public class PropertyResponse {
     private String address;
     private String title;
     private String description;
-    private Integer bedrooms;
-    private Integer bathrooms;
-    private BigDecimal area;
     private BigDecimal pricePerMonth;
     private BigDecimal securityDeposit;
     private Boolean isAvailable;

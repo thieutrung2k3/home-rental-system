@@ -1,9 +1,11 @@
 package com.kir.homerentalsystem.entity;
 
+import com.kir.homerentalsystem.constant.IdNumberType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
@@ -41,7 +43,23 @@ public class Account {
     @JoinColumn(name = "role_id", nullable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
-    
+
+    @Column(name = "id_number")
+    private String idNumber;
+
+    @Column(name = "issued_by")
+    private String issuedBy;
+
+    @Column(name = "issue_date")
+    private LocalDate issueDate;
+
+    @Column(name = "permanent_address")
+    private String permanentAddress;
+
+    @Column(name = "id_number_type")
+    @Enumerated(EnumType.STRING)
+    private IdNumberType idNumberType;
+
     @Column(name = "is_active")
     private Boolean isActive = false;
     

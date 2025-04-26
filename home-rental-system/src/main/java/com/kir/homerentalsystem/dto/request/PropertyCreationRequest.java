@@ -2,17 +2,24 @@ package com.kir.homerentalsystem.dto.request;
 
 import com.kir.homerentalsystem.entity.Amenity;
 import com.kir.homerentalsystem.entity.Location;
+import com.kir.homerentalsystem.entity.PropertyAttributeValue;
 import com.kir.homerentalsystem.entity.PropertyImage;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class PropertyCreationRequest {
     @NotNull
     private Long categoryId;
@@ -43,6 +50,7 @@ public class PropertyCreationRequest {
 
     private BigDecimal securityDeposit;
 
+    List<PropertyAttributeValueRequest> propertyAttributeValues;
     List<AmenityRequest> amenities;
     List<PropertyImageRequest> propertyImages;
 }

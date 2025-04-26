@@ -2,6 +2,8 @@ package com.kir.homerentalsystem.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,74 +18,74 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class Property {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "property_id")
     private Long propertyId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private Owner owner;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private PropertyCategory category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "location_id", nullable = false)
     private Location location;
 
-    @Column(name = "title", nullable = false, length = 255)
+    @Column(nullable = false)
     private String title;
 
-    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "address", nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false)
     private String address;
 
-    @Column(name = "bedrooms", nullable = false)
-    private Integer bedrooms;
-
-    @Column(name = "bathrooms", nullable = false)
-    private Integer bathrooms;
-
-    @Column(name = "area", nullable = false, precision = 10, scale = 2)
-    private BigDecimal area;
-
-    @Column(name = "price_per_month", nullable = false, precision = 12, scale = 2)
+    @Column(name = "price_per_month", nullable = false)
     private BigDecimal pricePerMonth;
 
-    @Column(name = "security_deposit", precision = 12, scale = 2)
+    @Column(name = "security_deposit")
     private BigDecimal securityDeposit;
 
-    @Column(name = "is_available", nullable = false)
+    @Column(name = "is_available")
     private Boolean isAvailable = true;
 
-    @Column(name = "is_featured", nullable = false)
+    @Column(name = "is_featured")
     private Boolean isFeatured = false;
 
+    @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Amenity> amenities = new HashSet<>();
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
+    private Set<PropertyAttributeValue> attributeValues = new HashSet<>();
 
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
     private Set<PropertyImage> propertyImages = new HashSet<>();
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = createdAt;
-    }
+    @ManyToMany
+    @JoinTable(
+            name = "property_amenity",
+            joinColumns = @JoinColumn(name = "property_id"),
+            inverseJoinColumns = @JoinColumn(name = "amenity_id")
+    )
+    private Set<Amenity> amenities = new HashSet<>();
 
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
+    @OneToMany(mappedBy = "property")
+    private Set<Lease> leases = new HashSet<>();
+
+    @OneToMany(mappedBy = "property")
+    private Set<MaintenanceRequest> maintenanceRequests = new HashSet<>();
+
+    @OneToMany(mappedBy = "property")
+    private Set<Review> reviews = new HashSet<>();
+
+    @OneToMany(mappedBy = "property")
+    private Set<PropertyViewing> viewings = new HashSet<>();
 }

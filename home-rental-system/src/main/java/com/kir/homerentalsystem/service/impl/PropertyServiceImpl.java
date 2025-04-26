@@ -46,6 +46,9 @@ public class PropertyServiceImpl implements PropertyService {
     private final AccountRepository accountRepository;
     private final MediaService mediaService;
     private final AmenityMapper amenityMapper;
+    private final PropertyAttributeValueRepository propertyAttributeValueRepository;
+    private final CategoryAttributeRepository categoryAttributeRepository;
+    private final PropertyAttributeRepository propertyAttributeRepository;
 
     @Override
     public Specification<Property> getSearchPropertiesForOwner(String title, String address,
@@ -205,45 +208,73 @@ public class PropertyServiceImpl implements PropertyService {
     @Transactional
     @Override
     public PropertyResponse createProperty(PropertyCreationRequest request) {
-        // Lấy và xác thực chủ sở hữu
+        Property property = new Property();
+
+        //Check role, add role to property
         String email = AuthUtil.getEmailFromToken();
         Owner owner = ownerRepository.findByAccount_Email(email)
                 .orElseThrow(() -> new AppException(ErrorCode.OWNER_NOT_EXISTED));
+        property.setOwner(owner);
+        log.info("Owner added to property: {}", owner.getAccount().getEmail());
 
-        validateOwnerStatus(owner);
-        log.info("Creating property for owner: {}", owner.getOwnerId());
-
-        // Lấy và xác thực danh mục bất động sản
+        //Category
         PropertyCategory category = propertyCategoryRepository.findById(request.getCategoryId())
-                .orElseThrow(() -> new AppException(ErrorCode.PROPERTY_CATEGORY_NOT_EXISTED));
-        log.info("Creating property with category: {}", category.getCategoryId());
+                .orElseThrow(() -> new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION));
+        category.getProperties().add(property);
+        property.setCategory(category);
+        log.info("Category added to property: {}", category.getCategoryId());
 
-        // Xử lý vị trí
+        //Location
         Location location = processLocation(request.getLocation());
-        log.info("Creating property with location: {}", location.getLocationId());
+        property.setLocation(location);
 
-        // Tạo đối tượng Property
-        Property property = createPropertyEntity(request, owner, category, location);
+        //Title, description, address, pricePerMonth, securityDeposit, isAvailable, isFeatured
+        property.setTitle(request.getTitle());
+        property.setDescription(request.getDescription());
+        property.setAddress(String.format("%s, %s, %s, %s",
+                location.getWard(), location.getDistrict(),
+                location.getCity(), location.getCountry()));
+        property.setPricePerMonth(request.getPricePerMonth());
+        property.setSecurityDeposit(request.getSecurityDeposit());
+        property.setIsAvailable(true);
+        property.setIsFeatured(false);
 
-        // Xử lý tiện nghi
-        Set<Amenity> amenities = processAmenities(request.getAmenities(), property);
+        log.info("Property saved: {}", property.getPropertyId());
 
-        // Xử lý hình ảnh
+        Set<Long> validIds = category.getCategoryAttributes()
+                .stream().map(ca -> ca.getAttribute().getId())
+                .collect(Collectors.toSet());
+        validIds.stream().forEach(id -> {
+            log.info("Valid attribute id: {}", id);
+        });
+        Set<PropertyAttributeValue> propertyAttributeValues = new HashSet<>();
+        for (var i : request.getPropertyAttributeValues()) {
+            if (!validIds.contains(i.getAttributeId())) {
+                throw new AppException(ErrorCode.ATTRIBUTE_INVALID);
+            }
+            PropertyAttribute attribute = propertyAttributeRepository.findById(i.getAttributeId())
+                    .orElseThrow(() -> new AppException(ErrorCode.ATTRIBUTE_INVALID));
+            PropertyAttributeValue value = PropertyAttributeValue.builder()
+                    .id(new PropertyAttributeValueId(property.getPropertyId(), attribute.getId()))
+                    .property(property)
+                    .attribute(attribute)
+                    .value(i.getValue())
+                    .build();
+            propertyAttributeValues.add(value);
+        }
+        property.setAttributeValues(propertyAttributeValues);
+
+
+        //Image
         Set<PropertyImage> propertyImages = processPropertyImages(request.getPropertyImages(), property);
-
-        // Lưu tất cả dữ liệu
-        property.setAmenities(amenities);
         property.setPropertyImages(propertyImages);
+
+        //Amenities
+        processAmenities(request.getAmenities(), property);
+
         property = propertyRepository.save(property);
-        log.info("Property created with ID: {}", property.getPropertyId());
 
-        if (!propertyImages.isEmpty()) {
-            propertyImageRepository.saveAll(propertyImages);
-        }
-
-        if (!amenities.isEmpty()) {
-            amenityRepository.saveAll(amenities);
-        }
+        log.info("Property saved: {}", property.getPropertyId());
 
         return propertyMapper.toPropertyResponse(property);
     }
@@ -294,14 +325,14 @@ public class PropertyServiceImpl implements PropertyService {
 
         Set<Amenity> amenities = new HashSet<>();
         for (AmenityRequest request : amenityRequests) {
-            if (request.getFile() == null) {
-                continue;
-            }
-            String url = mediaService.uploadImage(request.getFile());
-            Amenity amenity = amenityMapper.toAmenity(request);
-            amenity.setProperty(property);
-            amenity.setImageUrl(url);
+            Amenity amenity = amenityRepository.findById(request.getAmenityId())
+                    .orElseGet(() -> {
+                        log.info("Amenity not existed, creating new one: {}", request.getName());
+                        return amenityRepository.save(amenityMapper.toAmenity(request));
+                    });
+            amenity.getProperty().add(property);
             amenities.add(amenity);
+            log.info("Amenity added to property: {}", amenity.getAmenityId());
         }
 
         return amenities;

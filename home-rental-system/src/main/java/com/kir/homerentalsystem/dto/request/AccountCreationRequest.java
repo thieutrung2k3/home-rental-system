@@ -1,7 +1,9 @@
 package com.kir.homerentalsystem.dto.request;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -31,6 +33,17 @@ public class AccountCreationRequest {
 
     @NotBlank(message = "Vui lòng chọn vai trò")
     private String roleName; // OWNER hoặc TENANT
+
+    private String idNumber;
+
+    private String issuedBy;
+
+    private LocalDate issueDate;
+
+    private String permanentAddress;
+
+    @Pattern(regexp = "CMND|CCCD|PASSPORT", message = "Loại giấy tờ không hợp lệ")
+    private String idNumberType;
 
     // Dành cho chủ sở hữu (OWNER)
     private String companyName;
