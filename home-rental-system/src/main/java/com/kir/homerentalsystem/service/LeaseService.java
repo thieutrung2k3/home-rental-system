@@ -1,6 +1,12 @@
 package com.kir.homerentalsystem.service;
 
-public interface LeaseService {
+import com.kir.homerentalsystem.dto.request.LeaseCreationRequest;
+import com.kir.homerentalsystem.dto.response.LeaseResponse;
 
-    void startLease(long propertyId, long tenantId);
+import java.time.LocalDate;
+
+public interface LeaseService {
+    void startLease(LeaseCreationRequest request);
+    boolean canBePrebooked(Long propertyId, LocalDate startDate);
+    LeaseResponse createPrebookedLease(LeaseCreationRequest request);
 }

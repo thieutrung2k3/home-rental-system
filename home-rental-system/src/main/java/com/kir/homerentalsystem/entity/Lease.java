@@ -50,6 +50,9 @@ public class Lease {
     @Column(nullable = false)
     private String status;  // 'PENDING', 'ACTIVE', 'TERMINATED', 'EXPIRED'
 
+    @Column(name = "file_url", nullable = false)
+    private String fileUrl;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

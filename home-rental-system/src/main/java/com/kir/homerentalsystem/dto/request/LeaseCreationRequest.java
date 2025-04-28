@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -12,8 +13,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class LeaseCreationRequest {
     private Long propertyId;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
-    private BigDecimal monthlyRent;
-    private BigDecimal securityDeposit;
+    private LocalDate startDate;
+    private LocalDate endDate;
 }
