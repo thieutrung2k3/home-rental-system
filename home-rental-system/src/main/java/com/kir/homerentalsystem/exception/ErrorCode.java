@@ -39,6 +39,7 @@ public enum ErrorCode {
     PROPERTY_VIEWING_REQUEST_EXISTED(9028, "Yêu cầu xem nhà đã tồn tại.", HttpStatus.BAD_REQUEST),
     ATTRIBUTE_INVALID(9029, "Thuộc tính không hợp lệ.", HttpStatus.BAD_REQUEST),
     LEASE_NOT_EXISTED(9030, "Hợp đồng không tồn tại", HttpStatus.NOT_FOUND),
+    LEASE_EXISTED(9031, "Hợp đồng đã tồn tại", HttpStatus.BAD_REQUEST),
     UNCATEGORIZED_EXCEPTION(9999, "Lỗi không xác định", HttpStatus.INTERNAL_SERVER_ERROR);
     
     private int code;

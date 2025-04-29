@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Paper,
@@ -38,7 +38,7 @@ import {
   Delete,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { privateAxios } from "../../utils/axiosInstance";
+import { privateAxios, publicAxios } from "../../utils/axiosInstance";
 import { alpha } from "@mui/material/styles";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -91,18 +91,26 @@ const CreateProperty = () => {
     propertyImages: [],
   });
 
-  // Update the tempAmenity state to include imageFile and imagePreview
+  // Add this state after other state declarations
+  const [availableAmenities, setAvailableAmenities] = useState([]);
+  const [selectedAmenity, setSelectedAmenity] = useState("");
+  const [isCustomAmenity, setIsCustomAmenity] = useState(false);
+
+  // Update the tempAmenity state - remove image related fields
   const [tempAmenity, setTempAmenity] = useState({
+    amenityId: null,
     name: "",
     description: "",
-    imageFile: null,
-    imagePreview: null,
   });
   const [images, setImages] = useState([]);
   const [errors, setErrors] = useState({});
 
   // Add loading state
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Add this to your state declarations
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   // Handle image upload
   const handleImageUpload = (event) => {
@@ -137,7 +145,7 @@ const CreateProperty = () => {
     });
   };
 
-  // Handle amenity input
+  // Update handleAmenityChange to handle both custom and selected amenities
   const handleAmenityChange = (e) => {
     const { name, value } = e.target;
     setTempAmenity((prev) => ({
@@ -146,72 +154,204 @@ const CreateProperty = () => {
     }));
   };
 
-  // Add handler for amenity image upload
-  const handleAmenityImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setTempAmenity((prev) => ({
-        ...prev,
-        imageFile: file,
-        imagePreview: URL.createObjectURL(file),
-      }));
+  // Add this new handler for selecting an existing amenity
+  const handleAmenitySelect = (event) => {
+    const value = event.target.value;
+
+    if (value === "custom") {
+      setIsCustomAmenity(true);
+      setTempAmenity({
+        amenityId: null,
+        name: "",
+        description: "",
+      });
+    } else {
+      setIsCustomAmenity(false);
+      const selected = availableAmenities.find(
+        (amenity) => amenity.amenityId === Number(value)
+      );
+      if (selected) {
+        setTempAmenity({
+          amenityId: selected.amenityId,
+          name: selected.name,
+          description: selected.description,
+        });
+      }
     }
+
+    setSelectedAmenity(value);
   };
 
   // Update the handleAddAmenity function to include image preview
   const handleAddAmenity = () => {
-    if (tempAmenity.name && tempAmenity.description && tempAmenity.imageFile) {
+    if (tempAmenity.name && tempAmenity.description) {
+      // Check if this amenity is already added
+      const isDuplicate = propertyData.amenities.some(
+        (a) =>
+          a.amenityId === tempAmenity.amenityId ||
+          (a.name.toLowerCase() === tempAmenity.name.toLowerCase() &&
+            !a.amenityId &&
+            !tempAmenity.amenityId)
+      );
+
+      if (isDuplicate) {
+        toast.warning("Tiện ích này đã được thêm vào danh sách!", {
+          position: "top-right",
+        });
+        return;
+      }
+
       setPropertyData((prev) => ({
         ...prev,
         amenities: [
           ...prev.amenities,
           {
+            amenityId: tempAmenity.amenityId,
             name: tempAmenity.name,
             description: tempAmenity.description,
-            imageFile: tempAmenity.imageFile,
-            imagePreview: tempAmenity.imagePreview, // Keep the preview URL
           },
         ],
       }));
-      // Reset form without revoking the URL since we're still using it
+      // Reset form
       setTempAmenity({
+        amenityId: null,
         name: "",
         description: "",
-        imageFile: null,
-        imagePreview: null,
       });
+      setSelectedAmenity("");
+      setIsCustomAmenity(false);
     }
   };
 
-  // Update the handleRemoveAmenity function to cleanup image URLs
+  // Add this function after handleAddAmenity
   const handleRemoveAmenity = (index) => {
-    setPropertyData((prev) => {
-      // Revoke the URL before removing the amenity
-      if (prev.amenities[index]?.imagePreview) {
-        URL.revokeObjectURL(prev.amenities[index].imagePreview);
-      }
-      return {
-        ...prev,
-        amenities: prev.amenities.filter((_, i) => i !== index),
-      };
-    });
+    setPropertyData((prev) => ({
+      ...prev,
+      amenities: prev.amenities.filter((_, i) => i !== index),
+    }));
   };
+  // Add this useEffect after your state declarations
+  useEffect(() => {
+    // Function to fetch amenities from the API
+    const fetchAmenities = async () => {
+      try {
+        const response = await publicAxios.get("amenity/public/getAll");
+        console.log("Fetched amenities:", response.data);
+        if (response.data?.result) {
+          setAvailableAmenities(response.data.result);
+        }
+      } catch (error) {
+        console.error("Error fetching amenities:", error);
+        toast.error("Không thể tải danh sách tiện ích", {
+          position: "top-right",
+        });
+      }
+    };
 
-  // Update prepareFormData function
+    // Call the function when component mounts
+    fetchAmenities();
+  }, []); // Empty dependency array means this runs once on mount
+
+  // Add this useEffect to fetch categories
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await privateAxios.get("category/public/findAll");
+        console.log("Fetched categories:", response.data);
+        if (response.data?.result) {
+          setCategories(response.data.result);
+
+          // If we already have a categoryId, select that category
+          if (propertyData.categoryId) {
+            const selectedCat = response.data.result.find(
+              (cat) => cat.categoryId === propertyData.categoryId
+            );
+            setSelectedCategory(selectedCat || null);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        toast.error("Không thể tải danh sách loại hình nhà ở", {
+          position: "top-right",
+        });
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  // Update prepareFormData function to include propertyAttributeValues
   const prepareFormData = () => {
     const formData = new FormData();
 
-    // Prepare property data without files
+    // Extract property attribute values from the form data
+    const propertyAttributeValues = [];
+
+    // Check if category has attributes and process them
+    if (selectedCategory && selectedCategory.propertyAttributes) {
+      selectedCategory.propertyAttributes.forEach((attr) => {
+        const attributeKey = `attribute_${attr.id}`;
+        if (
+          propertyData[attributeKey] !== undefined &&
+          propertyData[attributeKey] !== ""
+        ) {
+          propertyAttributeValues.push({
+            attributeId: attr.id,
+            value: String(propertyData[attributeKey]), // Convert all values to string as per the example
+          });
+        }
+      });
+
+      // Add basic attributes that might be in the main propertyData
+      if (propertyData.bedrooms) {
+        // Find attribute ID for bedrooms from selected category
+        const bedroomsAttr = selectedCategory.propertyAttributes.find(
+          (attr) => attr.name === "Số phòng ngủ"
+        );
+        if (bedroomsAttr) {
+          propertyAttributeValues.push({
+            attributeId: bedroomsAttr.id,
+            value: String(propertyData.bedrooms),
+          });
+        }
+      }
+
+      if (propertyData.bathrooms) {
+        const bathroomsAttr = selectedCategory.propertyAttributes.find(
+          (attr) => attr.name === "Số phòng tắm"
+        );
+        if (bathroomsAttr) {
+          propertyAttributeValues.push({
+            attributeId: bathroomsAttr.id,
+            value: String(propertyData.bathrooms),
+          });
+        }
+      }
+    }
+
+    // Updated property JSON structure to match expected format
     const propertyJson = {
-      ...propertyData,
-      propertyImages: images.map((img) => ({
-        isPrimary: img.isPrimary,
-      })),
+      categoryId: propertyData.categoryId,
+      location: propertyData.location,
+      title: propertyData.title,
+      description: propertyData.description,
+      bedrooms: propertyData.bedrooms || 0,
+      bathrooms: propertyData.bathrooms || 0,
+      area: propertyData.area || 0,
+      pricePerMonth: propertyData.pricePerMonth || 0,
+      securityDeposit: propertyData.securityDeposit || 0,
+      propertyAttributeValues: propertyAttributeValues,
       amenities: propertyData.amenities.map((amenity) => ({
+        amenityId: amenity.amenityId,
         name: amenity.name,
         description: amenity.description,
       })),
+      propertyImages: images.map((img) => ({
+        isPrimary: img.isPrimary,
+      })),
     };
+
+    console.log("Property JSON being sent:", propertyJson);
 
     // Add property JSON string
     formData.append("property", JSON.stringify(propertyJson));
@@ -221,23 +361,9 @@ const CreateProperty = () => {
       formData.append("propertyImages", img.file);
     });
 
-    // Add amenity images - if there are no amenities, add an empty file
-    if (propertyData.amenities.length > 0) {
-      propertyData.amenities.forEach((amenity) => {
-        if (amenity.imageFile) {
-          formData.append("amenities", amenity.imageFile);
-        }
-      });
-    } else {
-      // Add an empty blob if no amenities to prevent backend error
-      const emptyBlob = new Blob([""], { type: "application/octet-stream" });
-      formData.append("amenities", emptyBlob);
-    }
-
-    // Log formData contents for debugging
-    for (let pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
-    }
+    // We don't need amenity images, but the API requires the field
+    const emptyBlob = new Blob([""], { type: "application/octet-stream" });
+    formData.append("amenities", emptyBlob);
 
     return formData;
   };
@@ -332,6 +458,18 @@ const CreateProperty = () => {
     }));
   };
 
+  // Add this function after handleLocationChange
+  const handleCategoryChange = (event) => {
+    const categoryId = Number(event.target.value);
+    const selected = categories.find((cat) => cat.categoryId === categoryId);
+
+    setSelectedCategory(selected);
+    setPropertyData((prev) => ({
+      ...prev,
+      categoryId: categoryId,
+    }));
+  };
+
   // Add navigation handlers
   const handleNext = () => {
     if (validateStep(activeStep)) {
@@ -350,45 +488,31 @@ const CreateProperty = () => {
 
     switch (step) {
       case 0:
-        if (!propertyData?.title?.trim()) {
+        // Remove category validation from step 0
+        if (!propertyData.title) {
           newErrors.title = "Vui lòng nhập tiêu đề";
           isValid = false;
         }
-        if (!propertyData?.location?.city?.trim()) {
-          newErrors.city = "Vui lòng nhập thành phố";
-          isValid = false;
-        }
-        if (!propertyData?.location?.district?.trim()) {
-          newErrors.district = "Vui lòng nhập quận/huyện";
-          isValid = false;
-        }
-        if (!propertyData?.location?.ward?.trim()) {
-          newErrors.ward = "Vui lòng nhập phường/xã";
-          isValid = false;
-        }
+        // Other validations for step 0
         break;
+
       case 1:
-        if (!propertyData?.pricePerMonth) {
+        // Add category validation to step 1
+        if (!propertyData.categoryId) {
+          newErrors.categoryId = "Vui lòng chọn loại hình nhà ở";
+          isValid = false;
+        }
+        if (!propertyData.pricePerMonth) {
           newErrors.pricePerMonth = "Vui lòng nhập giá cho thuê";
           isValid = false;
         }
-        if (!propertyData?.area) {
+        if (!propertyData.area) {
           newErrors.area = "Vui lòng nhập diện tích";
           isValid = false;
         }
         break;
-      // Add validation for other steps if needed
-      case 2:
-        if (propertyData.amenities.length > 0) {
-          const missingImages = propertyData.amenities.some(
-            (amenity) => !amenity.imageFile
-          );
-          if (missingImages) {
-            newErrors.amenities = "Tất cả tiện ích phải có ảnh";
-            isValid = false;
-          }
-        }
-        break;
+
+      // Other cases remain the same
     }
 
     setErrors(newErrors);
@@ -644,93 +768,358 @@ const CreateProperty = () => {
             <Grid
               item
               xs={12}
-              sm={6}
             >
-              <TextField
-                fullWidth
-                label='Giá cho thuê/tháng'
-                name='pricePerMonth'
-                type='number'
-                value={propertyData.pricePerMonth}
-                onChange={handleInputChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position='end'>VND</InputAdornment>
-                  ),
+              {/* Category selection */}
+              <Paper
+                elevation={2}
+                sx={{
+                  p: 3,
+                  background: alpha(themeColors.primary.main, 0.03),
+                  borderRadius: 2,
+                  mb: 3,
                 }}
-                error={!!errors.pricePerMonth}
-                helperText={errors.pricePerMonth}
-                required
-              />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-            >
-              <TextField
-                fullWidth
-                label='Tiền đặt cọc'
-                name='securityDeposit'
-                type='number'
-                value={propertyData.securityDeposit}
-                onChange={handleInputChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position='end'>VND</InputAdornment>
-                  ),
+              >
+                <Typography
+                  variant='h6'
+                  gutterBottom
+                  sx={{
+                    mb: 3,
+                    display: "flex",
+                    alignItems: "center",
+                    fontSize: "1.1rem",
+                    fontWeight: 600,
+                    color: themeColors.primary.main,
+                  }}
+                >
+                  <BusinessCenter sx={{ mr: 1.5 }} />
+                  Loại hình nhà ở
+                </Typography>
+
+                <Grid
+                  container
+                  spacing={3}
+                >
+                  <Grid
+                    item
+                    xs={12}
+                  >
+                    <FormControl
+                      fullWidth
+                      sx={{ backgroundColor: "#fff", p: 1, borderRadius: 1 }}
+                    >
+                      <InputLabel>Chọn loại hình</InputLabel>
+                      <Select
+                        value={propertyData.categoryId || ""}
+                        onChange={handleCategoryChange}
+                        label='Chọn loại hình'
+                        error={!!errors.categoryId}
+                      >
+                        <MenuItem value=''>
+                          <em>Chọn loại hình nhà ở</em>
+                        </MenuItem>
+                        {categories.map((category) => (
+                          <MenuItem
+                            key={category.categoryId}
+                            value={category.categoryId}
+                          >
+                            {category.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    {errors.categoryId && (
+                      <Typography
+                        color='error'
+                        variant='caption'
+                        sx={{ mt: 1, display: "block" }}
+                      >
+                        {errors.categoryId}
+                      </Typography>
+                    )}
+                    {selectedCategory && (
+                      <Typography
+                        variant='body2'
+                        color='text.secondary'
+                        sx={{
+                          mt: 2,
+                          p: 1,
+                          bgcolor: "rgba(0,0,0,0.03)",
+                          borderRadius: 1,
+                        }}
+                      >
+                        <strong>{selectedCategory.name}:</strong>{" "}
+                        {selectedCategory.description}
+                      </Typography>
+                    )}
+                  </Grid>
+                </Grid>
+              </Paper>
+
+              {/* Existing basic info section */}
+              <Paper
+                elevation={2}
+                sx={{
+                  p: 3,
+                  background: alpha(themeColors.primary.main, 0.03),
+                  borderRadius: 2,
+                  mb: 3,
                 }}
-              />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={4}
-            >
-              <TextField
-                fullWidth
-                label='Số phòng ngủ'
-                name='bedrooms'
-                type='number'
-                value={propertyData.bedrooms}
-                onChange={handleInputChange}
-              />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={4}
-            >
-              <TextField
-                fullWidth
-                label='Số phòng tắm'
-                name='bathrooms'
-                type='number'
-                value={propertyData.bathrooms}
-                onChange={handleInputChange}
-              />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={4}
-            >
-              <TextField
-                fullWidth
-                label='Diện tích'
-                name='area'
-                type='number'
-                value={propertyData.area}
-                onChange={handleInputChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position='end'>m²</InputAdornment>
-                  ),
-                }}
-                error={!!errors.area}
-                helperText={errors.area}
-                required
-              />
+              >
+                <Typography
+                  variant='h6'
+                  gutterBottom
+                  sx={{
+                    mb: 3,
+                    display: "flex",
+                    alignItems: "center",
+                    fontSize: "1.1rem",
+                    fontWeight: 600,
+                    color: themeColors.primary.main,
+                  }}
+                >
+                  <Description sx={{ mr: 1.5 }} />
+                  Thông tin cơ bản
+                </Typography>
+
+                <Grid
+                  container
+                  spacing={3}
+                >
+                  <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                  >
+                    <TextField
+                      fullWidth
+                      label='Giá cho thuê/tháng'
+                      name='pricePerMonth'
+                      type='number'
+                      value={propertyData.pricePerMonth}
+                      onChange={handleInputChange}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position='end'>VND</InputAdornment>
+                        ),
+                      }}
+                      error={!!errors.pricePerMonth}
+                      helperText={errors.pricePerMonth}
+                      required
+                      sx={{ backgroundColor: "#fff" }}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                  >
+                    <TextField
+                      fullWidth
+                      label='Tiền đặt cọc'
+                      name='securityDeposit'
+                      type='number'
+                      value={propertyData.securityDeposit}
+                      onChange={handleInputChange}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position='end'>VND</InputAdornment>
+                        ),
+                      }}
+                      sx={{ backgroundColor: "#fff" }}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={4}
+                  >
+                    <TextField
+                      fullWidth
+                      label='Số phòng ngủ'
+                      name='bedrooms'
+                      type='number'
+                      value={propertyData.bedrooms}
+                      onChange={handleInputChange}
+                      sx={{ backgroundColor: "#fff" }}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={4}
+                  >
+                    <TextField
+                      fullWidth
+                      label='Số phòng tắm'
+                      name='bathrooms'
+                      type='number'
+                      value={propertyData.bathrooms}
+                      onChange={handleInputChange}
+                      sx={{ backgroundColor: "#fff" }}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={4}
+                  >
+                    <TextField
+                      fullWidth
+                      label='Diện tích'
+                      name='area'
+                      type='number'
+                      value={propertyData.area}
+                      onChange={handleInputChange}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position='end'>m²</InputAdornment>
+                        ),
+                      }}
+                      error={!!errors.area}
+                      helperText={errors.area}
+                      required
+                      sx={{ backgroundColor: "#fff" }}
+                    />
+                  </Grid>
+                </Grid>
+              </Paper>
+
+              {/* Rest of the existing code for property attributes */}
+              {selectedCategory && selectedCategory.propertyAttributes && (
+                <Paper
+                  elevation={2}
+                  sx={{
+                    p: 3,
+                    background: alpha(themeColors.primary.main, 0.03),
+                    borderRadius: 2,
+                  }}
+                >
+                  <Typography
+                    variant='h6'
+                    gutterBottom
+                    sx={{
+                      mb: 3,
+                      display: "flex",
+                      alignItems: "center",
+                      fontSize: "1.1rem",
+                      fontWeight: 600,
+                      color: themeColors.primary.main,
+                    }}
+                  >
+                    <BusinessCenter sx={{ mr: 1.5 }} />
+                    Thuộc tính đặc thù ({selectedCategory.name})
+                  </Typography>
+
+                  <Grid
+                    container
+                    spacing={3}
+                  >
+                    {selectedCategory.propertyAttributes
+                      .filter(
+                        (attr) =>
+                          ![
+                            "Diện tích",
+                            "Số phòng ngủ",
+                            "Số phòng tắm",
+                          ].includes(attr.name)
+                      )
+                      .map((attribute) => {
+                        const attributeKey = `attribute_${attribute.id}`;
+
+                        // Check attribute data type
+                        if (attribute.dataType === "NUMBER") {
+                          return (
+                            <Grid
+                              item
+                              xs={12}
+                              sm={6}
+                              md={4}
+                              key={attributeKey}
+                            >
+                              <TextField
+                                fullWidth
+                                label={attribute.name}
+                                name={attributeKey}
+                                type='number'
+                                value={propertyData[attributeKey] || ""}
+                                onChange={handleInputChange}
+                                InputProps={{
+                                  endAdornment: attribute.unit ? (
+                                    <InputAdornment position='end'>
+                                      {attribute.unit}
+                                    </InputAdornment>
+                                  ) : null,
+                                }}
+                                helperText={attribute.description}
+                                sx={{ backgroundColor: "#fff" }}
+                              />
+                            </Grid>
+                          );
+                        } else if (attribute.dataType === "TEXT") {
+                          return (
+                            <Grid
+                              item
+                              xs={12}
+                              sm={6}
+                              key={attributeKey}
+                            >
+                              <TextField
+                                fullWidth
+                                label={attribute.name}
+                                name={attributeKey}
+                                value={propertyData[attributeKey] || ""}
+                                onChange={handleInputChange}
+                                helperText={attribute.description}
+                                sx={{ backgroundColor: "#fff" }}
+                              />
+                            </Grid>
+                          );
+                        } else if (attribute.dataType === "BOOLEAN") {
+                          return (
+                            <Grid
+                              item
+                              xs={12}
+                              sm={6}
+                              md={4}
+                              key={attributeKey}
+                            >
+                              <FormControlLabel
+                                control={
+                                  <Switch
+                                    checked={!!propertyData[attributeKey]}
+                                    onChange={(e) => {
+                                      handleInputChange({
+                                        target: {
+                                          name: attributeKey,
+                                          value: e.target.checked,
+                                        },
+                                      });
+                                    }}
+                                    color='primary'
+                                  />
+                                }
+                                label={
+                                  <Box>
+                                    <Typography variant='body1'>
+                                      {attribute.name}
+                                    </Typography>
+                                    <Typography
+                                      variant='caption'
+                                      color='text.secondary'
+                                    >
+                                      {attribute.description}
+                                    </Typography>
+                                  </Box>
+                                }
+                              />
+                            </Grid>
+                          );
+                        }
+                        return null;
+                      })}
+                  </Grid>
+                </Paper>
+              )}
             </Grid>
           </Grid>
         );
@@ -749,101 +1138,76 @@ const CreateProperty = () => {
                 variant='h6'
                 gutterBottom
               >
-                Thêm tiện ích
+                Tiện ích
               </Typography>
-              <Paper sx={{ p: 2, mb: 2 }}>
+              <Paper sx={{ p: 3, mb: 2 }}>
                 <Grid
                   container
                   spacing={2}
                 >
-                  {/* Input fields for amenity */}
+                  {/* Amenity selection or custom input */}
                   <Grid
                     item
                     xs={12}
-                    sm={4}
                   >
-                    <TextField
-                      fullWidth
-                      label='Tên tiện ích'
-                      name='name'
-                      value={tempAmenity.name}
-                      onChange={handleAmenityChange}
-                      required
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    sm={8}
-                  >
-                    <TextField
-                      fullWidth
-                      label='Mô tả'
-                      name='description'
-                      value={tempAmenity.description}
-                      onChange={handleAmenityChange}
-                      required
-                    />
+                    <FormControl fullWidth>
+                      <InputLabel>Chọn tiện ích có sẵn</InputLabel>
+                      <Select
+                        value={selectedAmenity}
+                        onChange={handleAmenitySelect}
+                        label='Chọn tiện ích có sẵn'
+                      >
+                        <MenuItem value=''>
+                          <em>Chọn tiện ích</em>
+                        </MenuItem>
+                        {availableAmenities.map((amenity) => (
+                          <MenuItem
+                            key={amenity.amenityId}
+                            value={amenity.amenityId}
+                          >
+                            {amenity.name}
+                          </MenuItem>
+                        ))}
+                        <MenuItem value='custom'>
+                          <em>+ Thêm tiện ích mới</em>
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
                   </Grid>
 
-                  {/* Image preview */}
-                  <Grid
-                    item
-                    xs={12}
-                  >
-                    {tempAmenity.imagePreview ? (
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 2,
-                          bgcolor: "grey.50",
-                          p: 2,
-                          borderRadius: 1,
-                        }}
+                  {/* Show these fields only if custom amenity is selected */}
+                  {isCustomAmenity && (
+                    <>
+                      <Grid
+                        item
+                        xs={12}
+                        sm={4}
                       >
-                        <img
-                          src={tempAmenity.imagePreview}
-                          alt='Preview'
-                          style={{
-                            width: 120,
-                            height: 120,
-                            objectFit: "cover",
-                            borderRadius: 8,
-                          }}
+                        <TextField
+                          fullWidth
+                          label='Tên tiện ích'
+                          name='name'
+                          value={tempAmenity.name}
+                          onChange={handleAmenityChange}
+                          required
                         />
-                        <IconButton
-                          color='error'
-                          onClick={() => {
-                            URL.revokeObjectURL(tempAmenity.imagePreview);
-                            setTempAmenity((prev) => ({
-                              ...prev,
-                              imageFile: null,
-                              imagePreview: null,
-                            }));
-                          }}
-                        >
-                          <Delete />
-                        </IconButton>
-                      </Box>
-                    ) : (
-                      <Button
-                        variant='outlined'
-                        component='label'
-                        startIcon={<AddPhotoAlternate />}
-                        fullWidth
-                        sx={{ py: 1.5 }}
+                      </Grid>
+                      <Grid
+                        item
+                        xs={12}
+                        sm={8}
                       >
-                        Chọn ảnh cho tiện ích
-                        <input
-                          type='file'
-                          hidden
-                          accept='image/*'
-                          onChange={handleAmenityImageUpload}
+                        <TextField
+                          fullWidth
+                          label='Mô tả'
+                          name='description'
+                          value={tempAmenity.description}
+                          onChange={handleAmenityChange}
+                          required
                         />
-                      </Button>
-                    )}
-                  </Grid>
+                      </Grid>
+                    </>
+                  )}
 
                   {/* Add button */}
                   <Grid
@@ -855,9 +1219,9 @@ const CreateProperty = () => {
                       variant='contained'
                       onClick={handleAddAmenity}
                       disabled={
-                        !tempAmenity.name ||
-                        !tempAmenity.description ||
-                        !tempAmenity.imageFile
+                        !selectedAmenity ||
+                        (isCustomAmenity &&
+                          (!tempAmenity.name || !tempAmenity.description))
                       }
                       sx={{ py: 1.5 }}
                     >
@@ -869,92 +1233,91 @@ const CreateProperty = () => {
 
               {/* List of added amenities */}
               <Box sx={{ mt: 3 }}>
-                <Grid
-                  container
-                  spacing={2}
+                <Typography
+                  variant='h6'
+                  gutterBottom
                 >
-                  {propertyData.amenities.map((amenity, index) => (
-                    <Grid
-                      item
-                      xs={12}
-                      sm={6}
-                      md={4}
-                      key={index}
-                    >
-                      <Paper
-                        elevation={2}
-                        sx={{
-                          p: 2,
-                          height: "100%",
-                          display: "flex",
-                          flexDirection: "column",
-                          position: "relative",
-                          overflow: "hidden",
-                        }}
+                  Tiện ích đã thêm
+                </Typography>
+                {propertyData.amenities.length === 0 ? (
+                  <Alert severity='info'>Chưa có tiện ích nào được thêm</Alert>
+                ) : (
+                  <Grid
+                    container
+                    spacing={2}
+                  >
+                    {propertyData.amenities.map((amenity, index) => (
+                      <Grid
+                        item
+                        xs={12}
+                        sm={6}
+                        md={4}
+                        key={index}
                       >
-                        <IconButton
-                          onClick={() => handleRemoveAmenity(index)}
-                          color='error'
+                        <Paper
+                          elevation={2}
                           sx={{
-                            position: "absolute",
-                            right: 8,
-                            top: 8,
-                            bgcolor: "rgba(255,255,255,0.8)",
-                            "&:hover": {
-                              bgcolor: "rgba(255,255,255,0.9)",
-                            },
-                            zIndex: 2,
+                            p: 3,
+                            height: "100%",
+                            display: "flex",
+                            flexDirection: "column",
+                            position: "relative",
+                            borderLeft: amenity.amenityId
+                              ? `4px solid ${themeColors.primary.main}`
+                              : `4px solid ${themeColors.secondary.main}`,
                           }}
                         >
-                          <Delete />
-                        </IconButton>
-
-                        <Box sx={{ position: "relative", mb: 2 }}>
-                          <img
-                            src={amenity.imagePreview}
-                            alt={amenity.name}
-                            style={{
-                              width: "100%",
-                              height: 200,
-                              objectFit: "cover",
-                              borderRadius: 8,
-                            }}
-                          />
-                        </Box>
-
-                        <Box sx={{ flexGrow: 1 }}>
-                          <Typography
-                            variant='subtitle1'
+                          <IconButton
+                            onClick={() => handleRemoveAmenity(index)}
+                            color='error'
                             sx={{
-                              fontWeight: 600,
-                              mb: 1,
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              display: "-webkit-box",
-                              WebkitLineClamp: 1,
-                              WebkitBoxOrient: "vertical",
+                              position: "absolute",
+                              right: 8,
+                              top: 8,
                             }}
                           >
-                            {amenity.name}
-                          </Typography>
-                          <Typography
-                            variant='body2'
-                            color='text.secondary'
-                            sx={{
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              display: "-webkit-box",
-                              WebkitLineClamp: 2,
-                              WebkitBoxOrient: "vertical",
-                            }}
-                          >
-                            {amenity.description}
-                          </Typography>
-                        </Box>
-                      </Paper>
-                    </Grid>
-                  ))}
-                </Grid>
+                            <Delete />
+                          </IconButton>
+
+                          <Box sx={{ flexGrow: 1 }}>
+                            <Typography
+                              variant='subtitle1'
+                              sx={{
+                                fontWeight: 600,
+                                mb: 1,
+                                display: "flex",
+                                alignItems: "center",
+                              }}
+                            >
+                              {amenity.name}
+                              {!amenity.amenityId && (
+                                <Typography
+                                  component='span'
+                                  sx={{
+                                    ml: 1,
+                                    fontSize: "0.7rem",
+                                    backgroundColor: themeColors.secondary.main,
+                                    color: "#fff",
+                                    padding: "2px 6px",
+                                    borderRadius: "4px",
+                                  }}
+                                >
+                                  TÙY CHỈNH
+                                </Typography>
+                              )}
+                            </Typography>
+                            <Typography
+                              variant='body2'
+                              color='text.secondary'
+                            >
+                              {amenity.description}
+                            </Typography>
+                          </Box>
+                        </Paper>
+                      </Grid>
+                    ))}
+                  </Grid>
+                )}
               </Box>
             </Grid>
           </Grid>

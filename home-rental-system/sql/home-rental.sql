@@ -317,7 +317,8 @@ CREATE TABLE lease
     FOREIGN KEY (tenant_id) REFERENCES tenant (tenant_id)
 );
 
-ALTER TABLE lease ADD COLUMN file_url VARCHAR(255) NOT NULL;
+ALTER TABLE lease ADD COLUMN file_url VARCHAR(255);
+# ALTER TABLE lease DROP COLUMN file_url;
 
 -- Payments
 CREATE TABLE payment

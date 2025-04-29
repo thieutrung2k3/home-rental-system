@@ -13,6 +13,5 @@ import lombok.*;
 public class AmenityResponse {
     private Long amenityId;
     private String name;
-    private String imageUrl;
     private String description;
 }

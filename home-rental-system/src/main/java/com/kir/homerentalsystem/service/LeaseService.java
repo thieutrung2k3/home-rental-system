@@ -9,4 +9,5 @@ public interface LeaseService {
     void startLease(LeaseCreationRequest request);
     boolean canBePrebooked(Long propertyId, LocalDate startDate);
     LeaseResponse createPrebookedLease(LeaseCreationRequest request);
+    void activePrebookedLease();
 }

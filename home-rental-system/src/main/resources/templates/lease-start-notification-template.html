@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông báo bắt đầu hợp đồng</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .email-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #2a3f54;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .highlight-box {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+            border: 1px dashed #cfd8dc;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2a3f54;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-top: 30px;
+            border-left: 4px solid #ffd54f;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #78909c;
+            margin-top: 40px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #1976d2;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        @media only screen and (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .email-container {
+                padding: 20px;
+            }
+            .highlight-box {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="header">
+        <img src="https://example.com/logo.png" alt="Company Logo" class="logo">
+        <h1>Hợp đồng sắp bắt đầu</h1>
+    </div>
+
+    <div class="message">
+        <p>Kính gửi <strong>{username}</strong>,</p>
+        <p>Chúng tôi xin thông báo rằng hợp đồng <strong>{contractCode}</strong> sẽ chính thức bắt đầu sau:</p>
+    </div>
+
+    <div class="highlight-box">
+        {daysLeft} ngày nữa – {startDate}
+    </div>
+
+    <p>Vui lòng đảm bảo bạn đã chuẩn bị sẵn sàng các điều kiện cần thiết trước khi hợp đồng có hiệu lực.</p>
+
+    <p style="text-align: center;">
+        <a href="{contractDetailUrl}" class="button">Xem chi tiết hợp đồng</a>
+    </p>
+
+    <div class="note">
+        <p><strong>Lưu ý:</strong> Vui lòng kiểm tra thông tin hợp đồng để đảm bảo quyền lợi và trách nhiệm của bạn được thực hiện đúng thời hạn.</p>
+    </div>
+</div>
+
+<div class="footer">
+    <p>© 2025 Home Rental System. Tất cả các quyền được bảo lưu.</p>
+    <p>Địa chỉ: Konoha Village</p>
+    <p>Email hỗ trợ: <a href="mailto:support@homerentalsystem.com">support@homerentalsystem.com</a></p>
+</div>
+</body>
+</html>
