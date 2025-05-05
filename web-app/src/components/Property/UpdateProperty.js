@@ -48,7 +48,7 @@ import {
   Bathtub as BathtubIcon,
   SquareFoot as SquareFootIcon,
 } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { privateAxios, publicAxios } from "../../utils/axiosInstance";
 import { alpha } from "@mui/material/styles";
 import { toast, ToastContainer } from "react-toastify";
@@ -215,9 +215,10 @@ const TravelokaButton = ({
   </Button>
 );
 
-const CreateProperty = () => {
+const UpdateProperty = () => {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
+  const { id } = useParams(); // Add this to get property ID from URL
 
   const steps = [
     "Thông tin cơ bản",
@@ -227,6 +228,7 @@ const CreateProperty = () => {
   ];
 
   const [propertyData, setPropertyData] = useState({
+    propertyId: null, // Add propertyId field
     categoryId: 2,
     location: {
       city: "",
@@ -277,6 +279,7 @@ const CreateProperty = () => {
       file,
       preview: URL.createObjectURL(file),
       isPrimary: false,
+      isExisting: false,
     }));
 
     setImages((prev) => [...prev, ...newImages]);
@@ -296,9 +299,19 @@ const CreateProperty = () => {
   const handleRemoveImage = (index) => {
     setImages((prev) => {
       const newImages = [...prev];
-      URL.revokeObjectURL(newImages[index].preview);
-      newImages.splice(index, 1);
-      return newImages;
+      const image = newImages[index];
+
+      if (image.isExisting) {
+        // Mark existing images for deletion instead of removing
+        return newImages
+          .map((img, i) => (i === index ? { ...img, toDelete: true } : img))
+          .filter((img) => !img.toDelete);
+      } else {
+        // For new images, remove them directly
+        if (image.preview) URL.revokeObjectURL(image.preview);
+        newImages.splice(index, 1);
+        return newImages;
+      }
     });
   };
 
@@ -437,6 +450,138 @@ const CreateProperty = () => {
     fetchCategories();
   }, []);
 
+  // Add loading state for initial data fetch
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Add this useEffect to fetch the property data when component mounts
+  useEffect(() => {
+    const fetchPropertyData = async () => {
+      try {
+        setIsLoading(true);
+        console.log("Fetching property with ID:", id);
+
+        const response = await privateAxios.get(
+          `property/public/getPropertyById?id=${id}`
+        );
+
+        if (response.data?.result) {
+          const property = response.data.result;
+          console.log("Fetched property data:", property);
+
+          // Xử lý địa chỉ
+          const address = property.address || "";
+          const addressParts = address.split(", ");
+          const ward = addressParts.length > 0 ? addressParts[0] : "";
+          const district = addressParts.length > 1 ? addressParts[1] : "";
+          const city = addressParts.length > 2 ? addressParts[2] : "";
+          const country =
+            addressParts.length > 3 ? addressParts[3] : "Việt Nam";
+
+          // Tìm giá trị cho bedrooms, bathrooms, area từ propertyAttributeValues
+          const bedroomsAttr = property.propertyAttributeValues.find(
+            (attr) => attr.name === "Số phòng ngủ"
+          );
+          const bathroomsAttr = property.propertyAttributeValues.find(
+            (attr) => attr.name === "Số phòng tắm"
+          );
+          const areaAttr = property.propertyAttributeValues.find(
+            (attr) => attr.name === "Diện tích"
+          );
+
+          const bedrooms = bedroomsAttr ? bedroomsAttr.value : "0";
+          const bathrooms = bathroomsAttr ? bathroomsAttr.value : "0";
+          const area = areaAttr ? areaAttr.value : "0";
+
+          // Khai báo một đối tượng để lưu các thuộc tính bổ sung
+          const attributeValues = {};
+
+          // Lọc ra các thuộc tính khác và gán vào attributeValues
+          property.propertyAttributeValues.forEach((attr) => {
+            if (
+              !["Số phòng ngủ", "Số phòng tắm", "Diện tích"].includes(attr.name)
+            ) {
+              // Ví dụ: attr.name = "Có thang máy" -> attributeKey = "attribute_elevator"
+              // Cần tìm attribute ID thực tế từ selectedCategory
+              const matchedAttr = selectedCategory?.propertyAttributes?.find(
+                (catAttr) => catAttr.name === attr.name
+              );
+
+              if (matchedAttr) {
+                const attributeKey = `attribute_${matchedAttr.id}`;
+                attributeValues[attributeKey] =
+                  attr.value === "true" ? true : attr.value;
+              }
+            }
+          });
+
+          // Populate property data state
+          setPropertyData({
+            propertyId: property.propertyId,
+            categoryId: property.categoryId || 2, // Mặc định là 2 nếu không có
+            location: {
+              city: city,
+              district: district,
+              postalCode: "",
+              country: country,
+              ward: ward,
+              latitude: null,
+              longitude: null,
+            },
+            title: property.title,
+            description: property.description,
+            bedrooms: bedrooms,
+            bathrooms: bathrooms,
+            area: area,
+            pricePerMonth: property.pricePerMonth,
+            securityDeposit: property.securityDeposit,
+            amenities: property.amenities || [],
+            propertyImages: property.propertyImages || [],
+            ...attributeValues, // Thêm các thuộc tính bổ sung
+          });
+
+          // Set category if available
+          if (property.name && categories.length > 0) {
+            const selectedCat = categories.find(
+              (cat) => cat.name === property.name
+            );
+            setSelectedCategory(selectedCat || null);
+          }
+
+          // Process existing images
+          if (property.propertyImages && property.propertyImages.length > 0) {
+            const existingImages = property.propertyImages.map((img) => ({
+              id: img.imageId,
+              url: img.imageUrl,
+              preview: img.imageUrl,
+              isPrimary: img.isPrimary,
+              isExisting: true, // Mark as existing image
+            }));
+            setImages(existingImages);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching property:", error);
+        console.error("Error details:", error.response?.data);
+
+        toast.error("Không thể tải thông tin tài sản", {
+          position: "top-right",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchPropertyData();
+    } else {
+      setIsLoading(false);
+      toast.error("Không tìm thấy ID tài sản", {
+        position: "top-right",
+      });
+      navigate("/owner/properties");
+    }
+  }, [id, navigate, categories, selectedCategory]);
+
   // Update prepareFormData function to include propertyAttributeValues
   const prepareFormData = () => {
     const formData = new FormData();
@@ -501,6 +646,7 @@ const CreateProperty = () => {
 
     // Updated property JSON structure to match expected format
     const propertyJson = {
+      propertyId: propertyData.propertyId, // Include propertyId for update
       categoryId: propertyData.categoryId,
       location: propertyData.location,
       title: propertyData.title,
@@ -517,7 +663,11 @@ const CreateProperty = () => {
         description: amenity.description,
       })),
       propertyImages: images.map((img) => ({
+        id: img.id, // ID của ảnh hiện có
+        imageId: img.id, // Thêm imageId để đảm bảo
+        imageUrl: img.url || img.preview, // URL hình ảnh
         isPrimary: img.isPrimary,
+        toDelete: img.toDelete || false, // Flag for images to be deleted
       })),
     };
 
@@ -526,10 +676,12 @@ const CreateProperty = () => {
     // Add property JSON string
     formData.append("property", JSON.stringify(propertyJson));
 
-    // Add property images
-    images.forEach((img) => {
-      formData.append("propertyImages", img.file);
-    });
+    // Add new property images
+    images
+      .filter((img) => !img.isExisting)
+      .forEach((img) => {
+        formData.append("newPropertyImages", img.file);
+      });
 
     // We don't need amenity images, but the API requires the field
     const emptyBlob = new Blob([""], { type: "application/octet-stream" });
@@ -538,14 +690,19 @@ const CreateProperty = () => {
     return formData;
   };
 
-  // Update handleSubmit function
+  // Update handleSubmit function for updating instead of creating
+  // Cập nhật handleSubmit
+
   const handleSubmit = async () => {
     setIsSubmitting(true); // Start loading
     try {
       const formData = prepareFormData();
 
-      const response = await privateAxios.post(
-        "property/owner/createProperty",
+      // Log dữ liệu trước khi gửi để kiểm tra
+      console.log("Sending update data:", JSON.parse(formData.get("property")));
+
+      const response = await privateAxios.put(
+        `property/owner/updateProperty/${id}`,
         formData,
         {
           headers: {
@@ -554,8 +711,10 @@ const CreateProperty = () => {
         }
       );
 
+      console.log("Update response:", response.data);
+
       if (response.data?.result) {
-        toast.success("🏠 Tạo tài sản thành công!", {
+        toast.success("🏠 Cập nhật tài sản thành công!", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -584,7 +743,7 @@ const CreateProperty = () => {
       }
     } catch (error) {
       console.error(
-        "Error creating property:",
+        "Error updating property:",
         error.response?.data || error.message
       );
       const errorMessage =
@@ -1818,85 +1977,104 @@ const CreateProperty = () => {
       }}
     >
       <ToastContainer />
-      <Paper
-        elevation={0}
-        sx={{
-          p: { xs: 2, md: 3 },
-          borderRadius: 2,
-          border: `1px solid ${themeColors.neutral.main}`,
-          boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-        }}
-      >
-        <Typography
-          variant='h5'
-          gutterBottom
-          sx={{
-            mb: 3,
-            color: themeColors.text.primary,
-            fontWeight: 700,
-            textAlign: "center",
-          }}
-        >
-          Thêm tài sản mới
-        </Typography>
-
-        <TravelokaStyleStepper
-          activeStep={activeStep}
-          steps={steps}
-        />
-
-        {renderStepContent(activeStep)}
-
+      {isLoading ? (
         <Box
           sx={{
-            mt: 4,
             display: "flex",
-            justifyContent: "space-between",
-            borderTop: `1px solid ${themeColors.neutral.main}`,
-            pt: 3,
+            justifyContent: "center",
+            alignItems: "center",
+            height: "50vh",
           }}
         >
-          <TravelokaButton
-            variant='outlined'
-            onClick={handleBack}
-            disabled={activeStep === 0}
-            startIcon={<NavigateBefore />}
+          <CircularProgress />
+          <Typography
+            variant='h6'
+            sx={{ ml: 2 }}
           >
-            Quay lại
-          </TravelokaButton>
-
-          {activeStep === steps.length - 1 ? (
-            <TravelokaButton
-              variant='contained'
-              onClick={handleSubmit}
-              startIcon={isSubmitting ? null : <Save />}
-              disabled={isSubmitting}
-              color='secondary'
-            >
-              {isSubmitting ? (
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <CircularProgress
-                    size={24}
-                    color='inherit'
-                    sx={{ mr: 1 }}
-                  />
-                  Đang lưu...
-                </Box>
-              ) : (
-                "Lưu tài sản"
-              )}
-            </TravelokaButton>
-          ) : (
-            <TravelokaButton
-              variant='contained'
-              onClick={handleNext}
-              endIcon={<NavigateNext />}
-            >
-              Tiếp theo
-            </TravelokaButton>
-          )}
+            Đang tải thông tin tài sản...
+          </Typography>
         </Box>
-      </Paper>
+      ) : (
+        <Paper
+          elevation={0}
+          sx={{
+            p: { xs: 2, md: 3 },
+            borderRadius: 2,
+            border: `1px solid ${themeColors.neutral.main}`,
+            boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+          }}
+        >
+          <Typography
+            variant='h5'
+            gutterBottom
+            sx={{
+              mb: 3,
+              color: themeColors.text.primary,
+              fontWeight: 700,
+              textAlign: "center",
+            }}
+          >
+            Cập nhật thông tin tài sản
+          </Typography>
+
+          <TravelokaStyleStepper
+            activeStep={activeStep}
+            steps={steps}
+          />
+
+          {renderStepContent(activeStep)}
+
+          <Box
+            sx={{
+              mt: 4,
+              display: "flex",
+              justifyContent: "space-between",
+              borderTop: `1px solid ${themeColors.neutral.main}`,
+              pt: 3,
+            }}
+          >
+            <TravelokaButton
+              variant='outlined'
+              onClick={handleBack}
+              disabled={activeStep === 0}
+              startIcon={<NavigateBefore />}
+            >
+              Quay lại
+            </TravelokaButton>
+
+            {activeStep === steps.length - 1 ? (
+              <TravelokaButton
+                variant='contained'
+                onClick={handleSubmit}
+                startIcon={isSubmitting ? null : <Save />}
+                disabled={isSubmitting}
+                color='secondary'
+              >
+                {isSubmitting ? (
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <CircularProgress
+                      size={24}
+                      color='inherit'
+                      sx={{ mr: 1 }}
+                    />
+                    Đang cập nhật...
+                  </Box>
+                ) : (
+                  "Cập nhật tài sản"
+                )}
+              </TravelokaButton>
+            ) : (
+              <TravelokaButton
+                variant='contained'
+                onClick={handleNext}
+                endIcon={<NavigateNext />}
+              >
+                Tiếp theo
+              </TravelokaButton>
+            )}
+          </Box>
+        </Paper>
+      )}
 
       <Backdrop
         sx={{
@@ -1920,7 +2098,7 @@ const CreateProperty = () => {
               textShadow: "0 2px 4px rgba(0,0,0,0.3)",
             }}
           >
-            Đang tạo tài sản...
+            Đang cập nhật tài sản...
           </Typography>
         </Box>
       </Backdrop>
@@ -1928,4 +2106,4 @@ const CreateProperty = () => {
   );
 };
 
-export default CreateProperty;
+export default UpdateProperty;

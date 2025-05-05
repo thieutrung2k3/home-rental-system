@@ -1,5 +1,7 @@
 package com.kir.homerentalsystem.service.impl;
 
+import com.cloudinary.Cloudinary;
+import com.kir.homerentalsystem.constant.LeaseStatus;
 import com.kir.homerentalsystem.constant.VerificationStatus;
 import com.kir.homerentalsystem.dto.request.AmenityRequest;
 import com.kir.homerentalsystem.dto.request.PropertyCreationRequest;
@@ -26,10 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -49,6 +48,8 @@ public class PropertyServiceImpl implements PropertyService {
     private final PropertyAttributeValueRepository propertyAttributeValueRepository;
     private final CategoryAttributeRepository categoryAttributeRepository;
     private final PropertyAttributeRepository propertyAttributeRepository;
+    private final LeaseRepository leaseRepository;
+    private final Cloudinary cloudinary;
 
     @Override
     public Specification<Property> getSearchPropertiesForOwner(String title, String address,
@@ -130,13 +131,28 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public void deleteProperty(long propertyId) {
         String email = AuthUtil.getEmailFromToken();
-
         Property property = propertyRepository.findById(propertyId)
                 .orElseThrow(() -> new AppException(ErrorCode.PROPERTY_NOT_EXISTED));
 
-        if (property.getOwner().getAccount().getEmail().equals(email)) {
+        if (!property.getOwner().getAccount().getEmail().equals(email)) {
             throw new AppException(ErrorCode.NOT_AUTHORIZED);
         }
+
+        if(leaseRepository.existsByProperty_PropertyIdAndStatusIn(propertyId, List.of(LeaseStatus.PREBOOKED.name(), LeaseStatus.ACTIVE.name()))){
+            throw new AppException(ErrorCode.PROPERTY_IS_NOT_AVAILABLE);
+        }
+        try{
+            for(var image : property.getPropertyImages()){
+                String[] publicIds = image.getImageUrl().split("/");
+                String publicId = publicIds[publicIds.length - 1].split("\\.")[0];
+                log.info("Deleting image: {}", publicId);
+                cloudinary.uploader().destroy(publicId, Map.of("invalidate", true));
+            }
+        }catch (Exception e){
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
+        }
+
+
 
         propertyRepository.deleteById(propertyId);
         log.info("Property deleted: {}", property);

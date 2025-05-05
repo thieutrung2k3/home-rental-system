@@ -24,7 +24,22 @@ import java.util.Map;
 
 @Slf4j
 public class WordUtil {
+    public static void replace(XWPFDocument document, Map<String, String> placeholders){
+        for (XWPFParagraph paragraph : document.getParagraphs()) {
+            replacePlaceholdersInParagraph(paragraph, placeholders);
+        }
 
+        // Thay thế placeholder trong tables
+        for (XWPFTable table : document.getTables()) {
+            for (XWPFTableRow row : table.getRows()) {
+                for (XWPFTableCell cell : row.getTableCells()) {
+                    for (XWPFParagraph paragraph : cell.getParagraphs()) {
+                        replacePlaceholdersInParagraph(paragraph, placeholders);
+                    }
+                }
+            }
+        }
+    }
     public static ByteArrayInputStream fillTemplate(Lease lease) {
         // Khởi tạo document từ template
         XWPFDocument document;
@@ -48,51 +63,16 @@ public class WordUtil {
             Map<String, String> placeholders = createPlaceholderMap(lease);
 
             // Thay thế placeholder trong paragraphs
-            for (XWPFParagraph paragraph : document.getParagraphs()) {
-                replacePlaceholdersInParagraph(paragraph, placeholders);
-            }
-
-            // Thay thế placeholder trong tables
-            for (XWPFTable table : document.getTables()) {
-                for (XWPFTableRow row : table.getRows()) {
-                    for (XWPFTableCell cell : row.getTableCells()) {
-                        for (XWPFParagraph paragraph : cell.getParagraphs()) {
-                            replacePlaceholdersInParagraph(paragraph, placeholders);
-                        }
-                    }
-                }
-            }
+            replace(document, placeholders);
 
             // Thay thế placeholder trong header
             for (XWPFHeader header : document.getHeaderList()) {
-                for (XWPFParagraph paragraph : header.getParagraphs()) {
-                    replacePlaceholdersInParagraph(paragraph, placeholders);
-                }
-                for (XWPFTable table : header.getTables()) {
-                    for (XWPFTableRow row : table.getRows()) {
-                        for (XWPFTableCell cell : row.getTableCells()) {
-                            for (XWPFParagraph paragraph : cell.getParagraphs()) {
-                                replacePlaceholdersInParagraph(paragraph, placeholders);
-                            }
-                        }
-                    }
-                }
+               replace(document, placeholders);
             }
 
             // Thay thế placeholder trong footer
             for (XWPFFooter footer : document.getFooterList()) {
-                for (XWPFParagraph paragraph : footer.getParagraphs()) {
-                    replacePlaceholdersInParagraph(paragraph, placeholders);
-                }
-                for (XWPFTable table : footer.getTables()) {
-                    for (XWPFTableRow row : table.getRows()) {
-                        for (XWPFTableCell cell : row.getTableCells()) {
-                            for (XWPFParagraph paragraph : cell.getParagraphs()) {
-                                replacePlaceholdersInParagraph(paragraph, placeholders);
-                            }
-                        }
-                    }
-                }
+                replace(document, placeholders);
             }
 
             // Lưu document vào ByteArrayOutputStream
@@ -110,9 +90,9 @@ public class WordUtil {
         Map<String, String> placeholderMap = new HashMap<>();
 
         LocalDateTime startDate = lease.getCreatedAt();
-        placeholderMap.put("${START_DAY}", "15");
-        placeholderMap.put("${START_MONTH}", "5");
-        placeholderMap.put("${START_YEAR}", "2025");
+        placeholderMap.put("${START_DAY}", startDate.getDayOfMonth() + "");
+        placeholderMap.put("${START_MONTH}", startDate.getMonthValue() + "");
+        placeholderMap.put("${START_YEAR}", startDate.getYear() + "");
 
         String firstName = lease.getTenant().getAccount().getFirstName();
         String lastName = lease.getTenant().getAccount().getLastName();

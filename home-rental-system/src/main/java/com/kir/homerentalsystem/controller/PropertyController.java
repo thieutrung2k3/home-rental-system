@@ -57,6 +57,12 @@ public class PropertyController {
                 .build();
     }
 
+    @DeleteMapping("/owner/deleteProperty")
+    public ApiResponse<Void> deleteProperty(@RequestParam(value = "id") Long id) {
+        propertyService.deleteProperty(id);
+        return ApiResponse.<Void>builder().build();
+    }
+
     @GetMapping("/public/getPropertyById")
     public ApiResponse<PropertyResponse> getPropertyById(@RequestParam(value = "id") Long id) {
         return ApiResponse.<PropertyResponse>builder()

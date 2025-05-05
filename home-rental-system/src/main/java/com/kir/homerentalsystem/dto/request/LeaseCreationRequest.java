@@ -13,6 +13,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class LeaseCreationRequest {
     private Long propertyId;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private int startMonth;
+    private int endMonth;
 }

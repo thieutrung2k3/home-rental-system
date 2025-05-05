@@ -77,15 +77,15 @@ public class Property {
     )
     private Set<Amenity> amenities = new HashSet<>();
 
-    @OneToMany(mappedBy = "property")
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
     private Set<Lease> leases = new HashSet<>();
 
-    @OneToMany(mappedBy = "property")
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
     private Set<MaintenanceRequest> maintenanceRequests = new HashSet<>();
 
-    @OneToMany(mappedBy = "property")
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
     private Set<Review> reviews = new HashSet<>();
 
-    @OneToMany(mappedBy = "property")
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
     private Set<PropertyViewing> viewings = new HashSet<>();
 }

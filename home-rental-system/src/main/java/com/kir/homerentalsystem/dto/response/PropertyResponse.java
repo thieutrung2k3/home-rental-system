@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -29,6 +30,7 @@ public class PropertyResponse {
     private Boolean isFeatured;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private List<PAVResponse> propertyAttributeValues;
     private Set<AmenityResponse> amenities = new HashSet<>();
     private Set<PropertyImageResponse> propertyImages = new HashSet<>();
 }

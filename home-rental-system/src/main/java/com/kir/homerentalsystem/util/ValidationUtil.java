@@ -4,6 +4,8 @@ import java.util.regex.Pattern;
 
 /**
  * Lớp tiện ích để xác thực email và số điện thoại
+ * @author Trung
+ * @see ValidationUtil
  */
 public class ValidationUtil {
 
