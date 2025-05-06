@@ -27,5 +27,5 @@ public interface AuthService {
     void confirmPasswordReset(String email, String code);
 
     //TEST
-    void test();
+    String test(long num);
 }

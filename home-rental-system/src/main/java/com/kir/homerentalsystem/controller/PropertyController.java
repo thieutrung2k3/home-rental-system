@@ -96,4 +96,14 @@ public class PropertyController {
                         isAvailable, pageable))
                 .build();
     }
+
+    @GetMapping("/public/getPropertiesByCategory")
+    public ApiResponse<Page<PropertyResponse>> getPropertiesByCategory(@RequestParam(value = "categoryId") Long categoryId,
+                                                                        @RequestParam(value = "page", defaultValue = "0") int page,
+                                                                        @RequestParam(value = "size", defaultValue = "10") int size,
+                                                                        @RequestParam(value = "sortBy", defaultValue = "propertyId") String sortBy){
+        return ApiResponse.<Page<PropertyResponse>>builder()
+                .result(propertyService.getPropertiesByCategory(categoryId, page, size, sortBy))
+                .build();
+                                                                        }
 }

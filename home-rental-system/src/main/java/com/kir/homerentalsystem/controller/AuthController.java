@@ -20,9 +20,10 @@ public class AuthController {
     private final AccountService accountService;
 
     @GetMapping("/public/test")
-    public ApiResponse<Void> test() {
-        authService.test();
-        return ApiResponse.<Void>builder().build();
+    public ApiResponse<String> test(@RequestParam("num") long num) {
+       return ApiResponse.<String>builder()
+                .result(authService.test(num))
+                .build();
     }
 
     @PostMapping("/public/login")

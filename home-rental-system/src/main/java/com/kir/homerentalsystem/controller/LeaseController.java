@@ -4,9 +4,13 @@ import com.cloudinary.Api;
 import com.kir.homerentalsystem.constant.LeaseStatus;
 import com.kir.homerentalsystem.dto.ApiResponse;
 import com.kir.homerentalsystem.dto.request.LeaseCreationRequest;
+import com.kir.homerentalsystem.dto.response.ExportFileResponse;
 import com.kir.homerentalsystem.dto.response.LeaseResponse;
 import com.kir.homerentalsystem.service.LeaseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,5 +47,14 @@ public class LeaseController {
         return ApiResponse.<List<LeaseResponse>>builder()
                 .result(leaseService.getLeasesByStatusAndOwner(ownerId, status))
                 .build();
+    }
+
+    @GetMapping("/user/exportLease")
+    public ResponseEntity<byte[]> exportLease(@RequestParam Long leaseId){
+        ExportFileResponse response = leaseService.exportLease(leaseId);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + response.getFileName())
+                .contentType(MediaType.parseMediaType(response.getContentType()))
+                .body(response.getData());
     }
 }

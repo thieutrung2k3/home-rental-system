@@ -18,6 +18,7 @@ import com.kir.homerentalsystem.repository.TenantRepository;
 import com.kir.homerentalsystem.service.AuthService;
 import com.kir.homerentalsystem.service.EmailService;
 import com.kir.homerentalsystem.util.AuthUtil;
+import com.kir.homerentalsystem.util.NumberUtil;
 import com.kir.homerentalsystem.util.ValidationUtil;
 import com.kir.homerentalsystem.util.WordUtil;
 import com.nimbusds.jose.JOSEException;
@@ -79,51 +80,8 @@ public class AuthServiceImpl implements AuthService {
     private String loginApiUrl;
 
     @Override
-    public void test() {
-        Property property = propertyRepository.findById(21L).orElseThrow(() -> new AppException(ErrorCode.PROPERTY_NOT_EXISTED));
-        Tenant tenant = tenantRepository.findById(5L).orElseThrow(() -> new AppException(ErrorCode.TENANT_NOT_EXISTED));
-        log.info("Property: {}", property);
-        Lease lease = Lease.builder()
-//                .leaseId(1L)
-                .property(property)
-                .tenant(tenant)
-                .startDate(LocalDate.now())
-                .endDate(LocalDate.now().plusDays(1))
-                .monthlyRent(property.getPricePerMonth())
-                .securityDeposit(property.getSecurityDeposit())
-                .leaseTerms("asifhasd")
-                .status("PENDING")
-                .build();
-        log.info("Lease: {}", lease);
-        ByteArrayInputStream bis = WordUtil.fillTemplate(lease);
-
-        try {
-            // Tạo thư mục nếu chưa tồn tại
-            String uploadDir = "uploads/leases";
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-
-            // Tạo tên file dựa trên thông tin hợp đồng
-            String fileName = "lease_" + lease.getLeaseId() + "_" + tenant.getTenantId() + "_" +
-                    LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ".docx";
-            Path filePath = uploadPath.resolve(fileName);
-
-            // Ghi file vào thư mục
-            Files.copy(bis, filePath, StandardCopyOption.REPLACE_EXISTING);
-
-            System.out.println("File saved successfully: " + filePath.toString());
-        } catch (IOException e) {
-            throw new AppException(ErrorCode.UNAUTHENTICATED);
-        } finally {
-            try {
-                bis.close();
-            } catch (IOException e) {
-                // Log error
-                System.err.println("Error closing ByteArrayInputStream: " + e.getMessage());
-            }
-        }
+    public String test(long num) {
+        return NumberUtil.readNumberByVietnamese(num);
     }
 
     @Override

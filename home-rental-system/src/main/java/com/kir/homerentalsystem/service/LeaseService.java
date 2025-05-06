@@ -2,6 +2,7 @@ package com.kir.homerentalsystem.service;
 
 import com.kir.homerentalsystem.constant.LeaseStatus;
 import com.kir.homerentalsystem.dto.request.LeaseCreationRequest;
+import com.kir.homerentalsystem.dto.response.ExportFileResponse;
 import com.kir.homerentalsystem.dto.response.LeaseResponse;
 
 import java.time.LocalDate;
@@ -16,5 +17,5 @@ public interface LeaseService {
     void updateLeaseStatus(Long leaseId, LeaseStatus status);
     List<LeaseResponse> getLeasesByStatusAndOwner(Long ownerId, LeaseStatus status);
 
-    void exportLease(Long leaseId);
+    ExportFileResponse exportLease(Long leaseId);
 }

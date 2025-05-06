@@ -4,6 +4,7 @@ import com.kir.homerentalsystem.constant.LeaseStatus;
 import com.kir.homerentalsystem.constant.NotificationTitle;
 import com.kir.homerentalsystem.constant.NotificationType;
 import com.kir.homerentalsystem.dto.request.LeaseCreationRequest;
+import com.kir.homerentalsystem.dto.response.ExportFileResponse;
 import com.kir.homerentalsystem.dto.response.LeaseResponse;
 import com.kir.homerentalsystem.dto.response.NotificationResponse;
 import com.kir.homerentalsystem.entity.Lease;
@@ -18,6 +19,7 @@ import com.kir.homerentalsystem.repository.*;
 import com.kir.homerentalsystem.service.LeaseService;
 import com.kir.homerentalsystem.util.AuthUtil;
 import com.kir.homerentalsystem.util.TimeUtil;
+import com.kir.homerentalsystem.util.WordUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -25,6 +27,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -278,7 +282,22 @@ public class LeaseServiceImpl implements LeaseService {
     }
 
     @Override
-    public void exportLease(Long leaseId) {
+    public ExportFileResponse exportLease(Long leaseId) {
+        Lease lease = leaseRepository.findById(leaseId)
+                .orElseThrow(() -> new AppException(ErrorCode.LEASE_NOT_EXISTED));
 
+        ByteArrayInputStream inputStream = WordUtil.fillTemplate(lease);
+
+        try{
+            byte[] bytes = inputStream.readAllBytes();
+
+            return ExportFileResponse.builder()
+                    .fileName("lease_" + lease.getLeaseId() + ".docx")
+                    .contentType("application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                    .data(bytes)
+                    .build();
+        }catch (Exception e){
+            throw new AppException(ErrorCode.CAN_NOT_SAVE_FILE);
+        }
     }
 }
