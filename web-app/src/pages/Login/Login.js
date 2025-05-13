@@ -124,6 +124,10 @@ const Login = () => {
           setTimeout(() => {
             navigate("/tenant/home");
           }, 500);
+        } else if (scope === "ADMIN") {
+          setTimeout(() => {
+            navigate("/admin");
+          }, 500);
         } else {
           const redirectPath = getRedirectPath(scope);
           setTimeout(() => {

@@ -56,6 +56,11 @@ const Register = () => {
     lastName: "",
     phoneNumber: "",
     roleName: ROLES.TENANT, // Default to TENANT
+    idNumber: "",
+    issuedBy: "",
+    issueDate: "",
+    permanentAddress: "",
+    idNumberType: "CCCD",
 
     // Owner fields
     companyName: "",
@@ -133,6 +138,26 @@ const Register = () => {
       return false;
     }
 
+    if (!formData.idNumber) {
+      setError("Số CMND/CCCD không được để trống");
+      return false;
+    }
+
+    if (!formData.issuedBy) {
+      setError("Nơi cấp không được để trống");
+      return false;
+    }
+
+    if (!formData.issueDate) {
+      setError("Ngày cấp không được để trống");
+      return false;
+    }
+
+    if (!formData.permanentAddress) {
+      setError("Địa chỉ thường trú không được để trống");
+      return false;
+    }
+
     // Validate Owner fields
     if (formData.roleName === ROLES.OWNER) {
       if (!formData.companyName) {
@@ -183,6 +208,11 @@ const Register = () => {
         lastName: formData.lastName,
         phoneNumber: formData.phoneNumber,
         roleName: formData.roleName,
+        idNumber: formData.idNumber,
+        issuedBy: formData.issuedBy,
+        issueDate: formData.issueDate,
+        permanentAddress: formData.permanentAddress,
+        idNumberType: formData.idNumberType,
       };
 
       // Add role-specific fields
@@ -609,6 +639,130 @@ const Register = () => {
                               startAdornment: (
                                 <InputAdornment position='start'>
                                   <PhoneIcon color='primary' />
+                                </InputAdornment>
+                              ),
+                            }}
+                          />
+                        </Grid>
+
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                        >
+                          <TextField
+                            required
+                            fullWidth
+                            id='idNumber'
+                            label='Số CMND/CCCD'
+                            name='idNumber'
+                            value={formData.idNumber}
+                            onChange={handleChange}
+                            disabled={isLoading}
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position='start'>
+                                  <DescriptionIcon color='primary' />
+                                </InputAdornment>
+                              ),
+                            }}
+                          />
+                        </Grid>
+
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                        >
+                          <FormControl
+                            fullWidth
+                            required
+                          >
+                            <InputLabel id='idNumberType-label'>
+                              Loại giấy tờ
+                            </InputLabel>
+                            <Select
+                              labelId='idNumberType-label'
+                              id='idNumberType'
+                              name='idNumberType'
+                              value={formData.idNumberType}
+                              label='Loại giấy tờ'
+                              onChange={handleChange}
+                              disabled={isLoading}
+                            >
+                              <MenuItem value='CCCD'>CCCD</MenuItem>
+                              <MenuItem value='CMND'>CMND</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                        >
+                          <TextField
+                            required
+                            fullWidth
+                            id='issuedBy'
+                            label='Nơi cấp'
+                            name='issuedBy'
+                            value={formData.issuedBy}
+                            onChange={handleChange}
+                            disabled={isLoading}
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position='start'>
+                                  <BusinessIcon color='primary' />
+                                </InputAdornment>
+                              ),
+                            }}
+                          />
+                        </Grid>
+
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                        >
+                          <TextField
+                            required
+                            fullWidth
+                            id='issueDate'
+                            label='Ngày cấp'
+                            name='issueDate'
+                            type='date'
+                            value={formData.issueDate}
+                            onChange={handleChange}
+                            disabled={isLoading}
+                            InputLabelProps={{ shrink: true }}
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position='start'>
+                                  <DateRangeIcon color='primary' />
+                                </InputAdornment>
+                              ),
+                            }}
+                          />
+                        </Grid>
+
+                        <Grid
+                          item
+                          xs={12}
+                        >
+                          <TextField
+                            required
+                            fullWidth
+                            id='permanentAddress'
+                            label='Địa chỉ thường trú'
+                            name='permanentAddress'
+                            value={formData.permanentAddress}
+                            onChange={handleChange}
+                            disabled={isLoading}
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position='start'>
+                                  <HomeIcon color='primary' />
                                 </InputAdornment>
                               ),
                             }}

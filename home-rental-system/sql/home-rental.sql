@@ -29,18 +29,18 @@ CREATE TABLE account
     permanent_address VARCHAR(50) NOT NULL,
     id_number_type VARCHAR(10) NOT NULL,
     role_id      BIGINT       NOT NULL,
-    is_active    BOOLEAN   DEFAULT FALSE,
+    status VARCHAR(20) NOT NULL CHECK ( status in ('ACTIVE', 'INACTIVE', 'BANNED') ),
     created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (role_id) REFERENCES role (role_id)
 );
 
 -- Insert admin account
-INSERT INTO account (email, password, first_name, last_name, phone_number, role_id, is_active, id_number, issue_date, issued_by, permanent_address, id_number_type)
+INSERT INTO account (email, password, first_name, last_name, phone_number, role_id, status, id_number, issue_date, issued_by, permanent_address, id_number_type)
 VALUES ('whyiam200@gmail.com', '$2a$10$i4cCVB/vimsLYoG55pxV3.4AyFrVqe08ImXZ3YkSIbQDY.1yy9qmu', 'System',
         'Administrator', '0345695203',
         (SELECT role_id FROM role WHERE name = 'ADMIN'),
-        TRUE, '033203007044', '2024-4-25', 'CCSQLHCVTTVXH', 'JSJSJSJSJSJSJSJSJ','CCCD');
+        'ACTIVE', '033203007044', '2024-4-25', 'CCSQLHCVTTVXH', 'JSJSJSJSJSJSJSJSJ','CCCD');
 
 -- Property owners
 CREATE TABLE owner

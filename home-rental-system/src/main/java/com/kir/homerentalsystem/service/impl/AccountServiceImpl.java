@@ -1,9 +1,6 @@
 package com.kir.homerentalsystem.service.impl;
 
-import com.kir.homerentalsystem.constant.AuthEmailType;
-import com.kir.homerentalsystem.constant.IdNumberType;
-import com.kir.homerentalsystem.constant.RoleConst;
-import com.kir.homerentalsystem.constant.VerificationStatus;
+import com.kir.homerentalsystem.constant.*;
 import com.kir.homerentalsystem.dto.request.AccountCreationRequest;
 import com.kir.homerentalsystem.dto.request.AccountUpdateRequest;
 import com.kir.homerentalsystem.dto.request.PasswordUpdateRequest;
@@ -39,7 +36,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,7 +86,7 @@ public class AccountServiceImpl implements AccountService {
         // Tạo và cấu hình account
         Account account = accountMapper.toAccount(request);
         account.setRole(role);
-        account.setIsActive(false);
+        account.setStatus(AccountStatus.INACTIVE.name());
         account.setPassword(passwordEncoder.encode(request.getPassword()));
         account.setIdNumberType(IdNumberType.valueOf(request.getIdNumberType().toUpperCase()));
 
@@ -253,9 +249,32 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Page<AccountResponse> getAllAccounts(int page, int size, String sortBy) {
+    public String bulkUpdateAccountStatus(List<Long> ids, String status) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Cập nhật thành công tài khoản: ");
+        for(var id : ids) {
+            Account account = accountRepository.findById(id)
+                    .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_EXISTED));
+            account.setStatus(status.toUpperCase());
+            accountRepository.save(account);
+            sb.append(account.getAccountId()).append(", ");
+            log.info("Account with ID {} has been {}d", id, status.equals(AccountStatus.ACTIVE.name()) ? "activated" : "deactivated");
+        }
+        sb.delete(sb.length() - 2, sb.length());
+
+        return sb.toString();
+    }
+
+    @Override
+    public Page<AccountResponse> getAllAccountsByRolesAndStatus(int page, int size, String sortBy, List<String> roleNames, String status) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
-        Page<Account> responsePage = accountRepository.findAll(pageable);
+        Page<Account> responsePage;
+
+        if (status == null) {
+            responsePage = accountRepository.findAllByRole_NameIn(pageable, roleNames);
+        } else {
+            responsePage = accountRepository.findAllByRole_NameInAndStatus(pageable, roleNames, status);
+        }
 
         return responsePage.map(accountMapper::toAccountResponse);
     }

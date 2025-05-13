@@ -1,0 +1,549 @@
+2025-05-11 10:20:59 INFO  [main] c.k.h.HomeRentalSystemApplication - Starting HomeRentalSystemApplication using Java 21.0.3 with PID 18424 (E:\Document\project-spring\rent-house\home-rental\home-rental-system\target\classes started by whyia in E:\Document\project-spring\rent-house\home-rental\home-rental-system)
+2025-05-11 10:20:59 INFO  [main] c.k.h.HomeRentalSystemApplication - No active profile set, falling back to 1 default profile: "default"
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 506 ms. Found 16 JPA repository interfaces.
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.AccountRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.AmenityRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.CategoryAttributeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.InvalidatedTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.LeaseRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.LocationRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.NotificationRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.OwnerRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.PropertyAttributeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.PropertyAttributeValueRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.PropertyCategoryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.PropertyImageRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.PropertyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.PropertyViewingRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.RoleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.TenantRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:21:02 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 52 ms. Found 0 Redis repository interfaces.
+2025-05-11 10:21:08 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8888 (http)
+2025-05-11 10:21:08 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8888"]
+2025-05-11 10:21:08 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-05-11 10:21:08 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2025-05-11 10:21:08 INFO  [main] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2025-05-11 10:21:08 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 9029 ms
+2025-05-11 10:21:08 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-11 10:21:09 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.2.Final
+2025-05-11 10:21:09 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-05-11 10:21:10 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-11 10:21:10 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-05-11 10:21:12 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@22105c76
+2025-05-11 10:21:12 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-05-11 10:21:13 INFO  [main] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.38
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-05-11 10:21:18 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-11 10:21:18 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-11 10:21:25 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-05-11 10:21:28 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2025-05-11 10:21:28 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@657dbc82]]
+2025-05-11 10:21:28 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2025-05-11 10:21:28 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8888"]
+2025-05-11 10:21:28 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8888 (http) with context path '/api/v1'
+2025-05-11 10:21:28 INFO  [main] o.a.k.c.consumer.ConsumerConfig - ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.include.jmx.reporter = true
+	auto.offset.reset = earliest
+	bootstrap.servers = [localhost:9094]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-renHome-1
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	enable.metrics.push = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = renHome
+	group.instance.id = null
+	group.protocol = classic
+	group.remote.assignor = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metadata.recovery.strategy = none
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.max.ms = 1000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.springframework.kafka.support.serializer.JsonDeserializer
+
+2025-05-11 10:21:29 INFO  [main] o.a.k.c.t.i.KafkaMetricsCollector - initializing Kafka metrics collector
+2025-05-11 10:21:29 INFO  [main] o.a.kafka.common.utils.AppInfoParser - Kafka version: 3.8.1
+2025-05-11 10:21:29 INFO  [main] o.a.kafka.common.utils.AppInfoParser - Kafka commitId: 70d6ff42debf7e17
+2025-05-11 10:21:29 INFO  [main] o.a.kafka.common.utils.AppInfoParser - Kafka startTimeMs: 1746933689490
+2025-05-11 10:21:29 INFO  [main] o.a.k.c.c.i.LegacyKafkaConsumer - [Consumer clientId=consumer-renHome-1, groupId=renHome] Subscribed to topic(s): otp-topic-v1
+2025-05-11 10:21:29 INFO  [main] c.k.h.HomeRentalSystemApplication - Started HomeRentalSystemApplication in 32.153 seconds (process running for 34.395)
+2025-05-11 10:21:33 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.Metadata - [Consumer clientId=consumer-renHome-1, groupId=renHome] Cluster ID: eo6I1RrMRJ-KkDqQGogutw
+2025-05-11 10:21:33 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Discovered group coordinator localhost:9094 (id: 2147483647 rack: null)
+2025-05-11 10:21:33 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] (Re-)joining group
+2025-05-11 10:21:33 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Request joining group due to: need to re-join with the given member-id: consumer-renHome-1-1d22b2b6-2d6d-4a56-9f33-c1268de6fcae
+2025-05-11 10:21:33 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] (Re-)joining group
+2025-05-11 10:21:36 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Successfully joined group with generation Generation{generationId=669, memberId='consumer-renHome-1-1d22b2b6-2d6d-4a56-9f33-c1268de6fcae', protocol='range'}
+2025-05-11 10:21:36 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Finished assignment for group at generation 669: {consumer-renHome-1-1d22b2b6-2d6d-4a56-9f33-c1268de6fcae=Assignment(partitions=[otp-topic-v1-0])}
+2025-05-11 10:21:36 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Successfully synced group in generation Generation{generationId=669, memberId='consumer-renHome-1-1d22b2b6-2d6d-4a56-9f33-c1268de6fcae', protocol='range'}
+2025-05-11 10:21:36 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Notifying assignor about the new Assignment(partitions=[otp-topic-v1-0])
+2025-05-11 10:21:36 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerRebalanceListenerInvoker - [Consumer clientId=consumer-renHome-1, groupId=renHome] Adding newly assigned partitions: otp-topic-v1-0
+2025-05-11 10:21:36 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerUtils - Setting offset for partition otp-topic-v1-0 to the committed offset FetchPosition{offset=53, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:9094 (id: 0 rack: null)], epoch=14}}
+2025-05-11 10:21:36 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer - renHome: partitions assigned: [otp-topic-v1-0]
+2025-05-11 10:21:39 INFO  [http-nio-8888-exec-1] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-05-11 10:21:39 INFO  [http-nio-8888-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-05-11 10:21:39 INFO  [http-nio-8888-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2025-05-11 10:21:40 INFO  [http-nio-8888-exec-3] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0LmhpZXV0cnVuZzJrM0BnbWFpbC5jb20iLCJhY2NvdW50SWQiOjIsInNjb3BlIjoiVEVOQU5UIiwiaXNzIjoiZGV2IiwiZXhwIjoxNzQ2OTQzNzAwLCJpYXQiOjE3NDY5MzM3MDAsImp0aSI6Ijc4ZTU0MTE5LTM5MjctNGI4YS1hNTk1LTNjN2E4YWRjM2EyMiJ9.1WwJKvAJddIdESx-PD3qO2KqRoSSiZVjKaXDhqcqVds
+2025-05-11 10:21:40 INFO  [http-nio-8888-exec-4] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0LmhpZXV0cnVuZzJrM0BnbWFpbC5jb20iLCJhY2NvdW50SWQiOjIsInNjb3BlIjoiVEVOQU5UIiwiaXNzIjoiZGV2IiwiZXhwIjoxNzQ2OTQzNzAwLCJpYXQiOjE3NDY5MzM3MDAsImp0aSI6Ijc4ZTU0MTE5LTM5MjctNGI4YS1hNTk1LTNjN2E4YWRjM2EyMiJ9.1WwJKvAJddIdESx-PD3qO2KqRoSSiZVjKaXDhqcqVds
+2025-05-11 10:21:41 INFO  [http-nio-8888-exec-4] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:21:41 INFO  [http-nio-8888-exec-3] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:21:41 INFO  [http-nio-8888-exec-3] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:21:41 INFO  [http-nio-8888-exec-4] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:21:41 INFO  [http-nio-8888-exec-4] c.k.h.config.CustomJwtDecoder - Subject: t.hieutrung2k3@gmail.com
+2025-05-11 10:21:41 INFO  [http-nio-8888-exec-3] c.k.h.config.CustomJwtDecoder - Subject: t.hieutrung2k3@gmail.com
+2025-05-11 10:21:41 INFO  [http-nio-8888-exec-3] c.k.h.controller.AccountController - Get my info
+2025-05-11 10:21:53 INFO  [http-nio-8888-exec-6] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0LmhpZXV0cnVuZzJrM0BnbWFpbC5jb20iLCJhY2NvdW50SWQiOjIsInNjb3BlIjoiVEVOQU5UIiwiaXNzIjoiZGV2IiwiZXhwIjoxNzQ2OTQzNzEzLCJpYXQiOjE3NDY5MzM3MTMsImp0aSI6Ijc4ZjdmNmE5LWJkMDQtNDdhYi1iNjc3LWYxM2YzMzQxYjcwZSJ9.FFPWJI4qEM1SUHxBQe6ApHPPGQ3X9DOvbEKHFC3gIzs
+2025-05-11 10:21:53 INFO  [http-nio-8888-exec-6] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:21:53 INFO  [http-nio-8888-exec-6] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:21:53 INFO  [http-nio-8888-exec-6] c.k.h.config.CustomJwtDecoder - Subject: t.hieutrung2k3@gmail.com
+2025-05-11 10:21:53 INFO  [http-nio-8888-exec-6] c.k.h.controller.AccountController - Get my info
+2025-05-11 10:21:53 INFO  [http-nio-8888-exec-8] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0LmhpZXV0cnVuZzJrM0BnbWFpbC5jb20iLCJhY2NvdW50SWQiOjIsInNjb3BlIjoiVEVOQU5UIiwiaXNzIjoiZGV2IiwiZXhwIjoxNzQ2OTQzNzEzLCJpYXQiOjE3NDY5MzM3MTMsImp0aSI6Ijc4ZjdmNmE5LWJkMDQtNDdhYi1iNjc3LWYxM2YzMzQxYjcwZSJ9.FFPWJI4qEM1SUHxBQe6ApHPPGQ3X9DOvbEKHFC3gIzs
+2025-05-11 10:21:53 INFO  [http-nio-8888-exec-8] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:21:53 INFO  [http-nio-8888-exec-8] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:21:53 INFO  [http-nio-8888-exec-8] c.k.h.config.CustomJwtDecoder - Subject: t.hieutrung2k3@gmail.com
+2025-05-11 10:22:28 INFO  [MessageBroker-4] o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 4 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(2)-CONNECTED(1)-DISCONNECT(1)], stompBrokerRelay[null], inboundChannel[pool size = 16, active threads = 0, queued tasks = 0, completed tasks = 24], outboundChannel[pool size = 7, active threads = 0, queued tasks = 0, completed tasks = 7], sockJsScheduler[pool size = 8, active threads = 1, queued tasks = 2, completed tasks = 10]
+2025-05-11 10:22:37 INFO  [http-nio-8888-exec-9] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:22:37 INFO  [http-nio-8888-exec-9] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:22:37 INFO  [http-nio-8888-exec-9] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:22:37 INFO  [http-nio-8888-exec-9] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:22:37 INFO  [http-nio-8888-exec-4] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:22:37 INFO  [http-nio-8888-exec-4] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:22:37 INFO  [http-nio-8888-exec-4] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:22:37 INFO  [http-nio-8888-exec-4] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:22:37 INFO  [http-nio-8888-exec-4] c.k.h.controller.AccountController - Get my info
+2025-05-11 10:22:38 INFO  [http-nio-8888-exec-1] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:22:38 INFO  [http-nio-8888-exec-1] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:22:38 INFO  [http-nio-8888-exec-1] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:22:38 INFO  [http-nio-8888-exec-1] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:22:38 INFO  [http-nio-8888-exec-1] c.k.h.controller.AccountController - Get my info
+2025-05-11 10:22:38 INFO  [http-nio-8888-exec-9] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:22:38 INFO  [http-nio-8888-exec-9] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:22:38 INFO  [http-nio-8888-exec-9] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:22:38 INFO  [http-nio-8888-exec-9] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:22:38 INFO  [http-nio-8888-exec-4] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:22:38 INFO  [http-nio-8888-exec-4] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:22:38 INFO  [http-nio-8888-exec-4] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:22:38 INFO  [http-nio-8888-exec-4] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:22:38 INFO  [http-nio-8888-exec-4] c.k.h.controller.AccountController - Get my info
+2025-05-11 10:22:42 INFO  [http-nio-8888-exec-2] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:22:42 INFO  [http-nio-8888-exec-2] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:22:42 INFO  [http-nio-8888-exec-2] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:22:42 INFO  [http-nio-8888-exec-2] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:22:42 INFO  [http-nio-8888-exec-7] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:22:42 INFO  [http-nio-8888-exec-7] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:22:42 INFO  [http-nio-8888-exec-7] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:22:42 INFO  [http-nio-8888-exec-7] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:22:42 INFO  [http-nio-8888-exec-6] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:22:42 INFO  [http-nio-8888-exec-6] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:22:42 INFO  [http-nio-8888-exec-6] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:22:42 INFO  [http-nio-8888-exec-6] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:22:42 WARN  [http-nio-8888-exec-6] o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-05-11 10:22:42 INFO  [http-nio-8888-exec-1] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:22:42 INFO  [http-nio-8888-exec-1] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:22:42 INFO  [http-nio-8888-exec-1] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:22:42 INFO  [http-nio-8888-exec-1] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:22:45 INFO  [http-nio-8888-exec-9] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:22:45 INFO  [http-nio-8888-exec-9] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:22:45 INFO  [http-nio-8888-exec-9] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:22:45 INFO  [http-nio-8888-exec-9] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:22:45 INFO  [http-nio-8888-exec-4] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:22:45 INFO  [http-nio-8888-exec-4] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:22:45 INFO  [http-nio-8888-exec-4] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:22:45 INFO  [http-nio-8888-exec-4] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:30:33 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-renHome-1, groupId=renHome] Node -1 disconnected.
+2025-05-11 10:31:35 INFO  [http-nio-8888-exec-5] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:31:36 INFO  [http-nio-8888-exec-5] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:31:36 INFO  [http-nio-8888-exec-5] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:31:36 INFO  [http-nio-8888-exec-5] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:31:36 INFO  [http-nio-8888-exec-5] c.k.h.s.impl.PropertyServiceImpl - Owner added to property: 54dull@chefalicious.com
+2025-05-11 10:31:36 INFO  [http-nio-8888-exec-5] c.k.h.s.impl.PropertyServiceImpl - Category added to property: 1
+2025-05-11 10:31:36 INFO  [http-nio-8888-exec-5] c.k.h.s.impl.PropertyServiceImpl - Property saved: null
+2025-05-11 10:31:36 INFO  [http-nio-8888-exec-5] c.k.h.s.impl.PropertyServiceImpl - Valid attribute id: 1
+2025-05-11 10:31:36 INFO  [http-nio-8888-exec-5] c.k.h.s.impl.PropertyServiceImpl - Valid attribute id: 2
+2025-05-11 10:31:36 INFO  [http-nio-8888-exec-5] c.k.h.s.impl.PropertyServiceImpl - Valid attribute id: 3
+2025-05-11 10:31:36 INFO  [http-nio-8888-exec-5] c.k.h.s.impl.PropertyServiceImpl - Valid attribute id: 4
+2025-05-11 10:31:36 INFO  [http-nio-8888-exec-5] c.k.h.s.impl.PropertyServiceImpl - Valid attribute id: 5
+2025-05-11 10:31:36 INFO  [http-nio-8888-exec-5] c.k.h.s.impl.PropertyServiceImpl - Valid attribute id: 6
+2025-05-11 10:31:36 INFO  [http-nio-8888-exec-5] c.k.h.s.impl.PropertyServiceImpl - Valid attribute id: 13
+2025-05-11 10:31:36 INFO  [http-nio-8888-exec-5] c.k.h.s.impl.PropertyServiceImpl - Valid attribute id: 14
+2025-05-11 10:31:36 INFO  [http-nio-8888-exec-5] c.k.h.s.impl.PropertyServiceImpl - Valid attribute id: 15
+2025-05-11 10:31:59 INFO  [http-nio-8888-exec-5] c.k.h.s.impl.PropertyServiceImpl - Amenity added to property: 7
+2025-05-11 10:31:59 INFO  [http-nio-8888-exec-5] c.k.h.s.impl.PropertyServiceImpl - Amenity added to property: 2
+2025-05-11 10:31:59 INFO  [http-nio-8888-exec-5] c.k.h.s.impl.PropertyServiceImpl - Property saved: 51
+2025-05-11 10:32:01 INFO  [http-nio-8888-exec-7] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:32:01 INFO  [http-nio-8888-exec-7] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:32:01 INFO  [http-nio-8888-exec-7] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:32:01 INFO  [http-nio-8888-exec-7] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:32:02 INFO  [http-nio-8888-exec-6] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:32:02 INFO  [http-nio-8888-exec-6] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:32:02 INFO  [http-nio-8888-exec-6] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:32:02 INFO  [http-nio-8888-exec-6] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:35:00 INFO  [MessageBroker-2] c.k.h.service.impl.LeaseServiceImpl - Active prebooked lease finished.
+2025-05-11 10:35:55 INFO  [http-nio-8888-exec-8] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:35:55 INFO  [http-nio-8888-exec-8] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:35:55 INFO  [http-nio-8888-exec-8] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:35:55 INFO  [http-nio-8888-exec-8] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:35:55 INFO  [http-nio-8888-exec-9] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:35:55 INFO  [http-nio-8888-exec-9] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:35:55 INFO  [http-nio-8888-exec-9] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:35:55 INFO  [http-nio-8888-exec-9] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:38:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerRebalanceListenerInvoker - [Consumer clientId=consumer-renHome-1, groupId=renHome] Revoke previously assigned partitions otp-topic-v1-0
+2025-05-11 10:38:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer - renHome: partitions revoked: [otp-topic-v1-0]
+2025-05-11 10:38:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Member consumer-renHome-1-1d22b2b6-2d6d-4a56-9f33-c1268de6fcae sending LeaveGroup request to coordinator localhost:9094 (id: 2147483647 rack: null) due to the consumer unsubscribed from all topics
+2025-05-11 10:38:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Resetting generation and member id due to: consumer pro-actively leaving the group
+2025-05-11 10:38:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Request joining group due to: consumer pro-actively leaving the group
+2025-05-11 10:38:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.LegacyKafkaConsumer - [Consumer clientId=consumer-renHome-1, groupId=renHome] Unsubscribed all topics or patterns and assigned partitions
+2025-05-11 10:38:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Resetting generation and member id due to: consumer pro-actively leaving the group
+2025-05-11 10:38:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Request joining group due to: consumer pro-actively leaving the group
+2025-05-11 10:38:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.kafka.common.metrics.Metrics - Metrics scheduler closed
+2025-05-11 10:38:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.kafka.common.metrics.Metrics - Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2025-05-11 10:38:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.kafka.common.metrics.Metrics - Closing reporter org.apache.kafka.common.telemetry.internals.ClientTelemetryReporter
+2025-05-11 10:38:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.kafka.common.metrics.Metrics - Metrics reporters closed
+2025-05-11 10:38:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.kafka.common.utils.AppInfoParser - App info kafka.consumer for consumer-renHome-1 unregistered
+2025-05-11 10:38:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer - renHome: Consumer stopped
+2025-05-11 10:38:10 INFO  [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-05-11 10:38:10 INFO  [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-05-11 10:38:10 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2025-05-11 10:38:10 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@657dbc82]]
+2025-05-11 10:38:10 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2025-05-11 10:38:10 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-05-11 10:38:10 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-05-11 10:38:10 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-05-11 10:38:15 INFO  [main] c.k.h.HomeRentalSystemApplication - Starting HomeRentalSystemApplication using Java 21.0.3 with PID 15768 (E:\Document\project-spring\rent-house\home-rental\home-rental-system\target\classes started by whyia in E:\Document\project-spring\rent-house\home-rental\home-rental-system)
+2025-05-11 10:38:15 INFO  [main] c.k.h.HomeRentalSystemApplication - No active profile set, falling back to 1 default profile: "default"
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 183 ms. Found 16 JPA repository interfaces.
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.AccountRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.AmenityRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.CategoryAttributeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.InvalidatedTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.LeaseRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.LocationRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.NotificationRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.OwnerRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.PropertyAttributeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.PropertyAttributeValueRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.PropertyCategoryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.PropertyImageRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.PropertyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.PropertyViewingRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.RoleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.kir.homerentalsystem.repository.TenantRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-05-11 10:38:16 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 0 Redis repository interfaces.
+2025-05-11 10:38:16 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8888 (http)
+2025-05-11 10:38:16 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8888"]
+2025-05-11 10:38:16 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-05-11 10:38:16 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2025-05-11 10:38:17 INFO  [main] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2025-05-11 10:38:17 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1906 ms
+2025-05-11 10:38:17 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-11 10:38:17 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.2.Final
+2025-05-11 10:38:17 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-05-11 10:38:17 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-11 10:38:17 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-05-11 10:38:18 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@54b35809
+2025-05-11 10:38:18 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-05-11 10:38:18 INFO  [main] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.38
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-05-11 10:38:19 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-11 10:38:19 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-11 10:38:20 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-05-11 10:38:21 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2025-05-11 10:38:21 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@4465d4ce]]
+2025-05-11 10:38:21 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2025-05-11 10:38:21 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8888"]
+2025-05-11 10:38:21 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8888 (http) with context path '/api/v1'
+2025-05-11 10:38:21 INFO  [main] o.a.k.c.consumer.ConsumerConfig - ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.include.jmx.reporter = true
+	auto.offset.reset = earliest
+	bootstrap.servers = [localhost:9094]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-renHome-1
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	enable.metrics.push = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = renHome
+	group.instance.id = null
+	group.protocol = classic
+	group.remote.assignor = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metadata.recovery.strategy = none
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.max.ms = 1000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.springframework.kafka.support.serializer.JsonDeserializer
+
+2025-05-11 10:38:21 INFO  [main] o.a.k.c.t.i.KafkaMetricsCollector - initializing Kafka metrics collector
+2025-05-11 10:38:21 INFO  [main] o.a.kafka.common.utils.AppInfoParser - Kafka version: 3.8.1
+2025-05-11 10:38:21 INFO  [main] o.a.kafka.common.utils.AppInfoParser - Kafka commitId: 70d6ff42debf7e17
+2025-05-11 10:38:21 INFO  [main] o.a.kafka.common.utils.AppInfoParser - Kafka startTimeMs: 1746934701747
+2025-05-11 10:38:21 INFO  [main] o.a.k.c.c.i.LegacyKafkaConsumer - [Consumer clientId=consumer-renHome-1, groupId=renHome] Subscribed to topic(s): otp-topic-v1
+2025-05-11 10:38:21 INFO  [main] c.k.h.HomeRentalSystemApplication - Started HomeRentalSystemApplication in 7.303 seconds (process running for 9.212)
+2025-05-11 10:38:22 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.Metadata - [Consumer clientId=consumer-renHome-1, groupId=renHome] Cluster ID: eo6I1RrMRJ-KkDqQGogutw
+2025-05-11 10:38:22 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Discovered group coordinator localhost:9094 (id: 2147483647 rack: null)
+2025-05-11 10:38:22 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] (Re-)joining group
+2025-05-11 10:38:22 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Request joining group due to: need to re-join with the given member-id: consumer-renHome-1-c1d1ba1c-0f61-4f6e-a110-4af1beb5845d
+2025-05-11 10:38:22 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] (Re-)joining group
+2025-05-11 10:38:25 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Successfully joined group with generation Generation{generationId=671, memberId='consumer-renHome-1-c1d1ba1c-0f61-4f6e-a110-4af1beb5845d', protocol='range'}
+2025-05-11 10:38:25 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Finished assignment for group at generation 671: {consumer-renHome-1-c1d1ba1c-0f61-4f6e-a110-4af1beb5845d=Assignment(partitions=[otp-topic-v1-0])}
+2025-05-11 10:38:25 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Successfully synced group in generation Generation{generationId=671, memberId='consumer-renHome-1-c1d1ba1c-0f61-4f6e-a110-4af1beb5845d', protocol='range'}
+2025-05-11 10:38:25 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Notifying assignor about the new Assignment(partitions=[otp-topic-v1-0])
+2025-05-11 10:38:25 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerRebalanceListenerInvoker - [Consumer clientId=consumer-renHome-1, groupId=renHome] Adding newly assigned partitions: otp-topic-v1-0
+2025-05-11 10:38:25 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerUtils - Setting offset for partition otp-topic-v1-0 to the committed offset FetchPosition{offset=53, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:9094 (id: 0 rack: null)], epoch=14}}
+2025-05-11 10:38:25 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer - renHome: partitions assigned: [otp-topic-v1-0]
+2025-05-11 10:39:21 INFO  [MessageBroker-1] o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 2, active threads = 1, queued tasks = 1, completed tasks = 0]
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] c.k.h.s.impl.PropertyServiceImpl - Owner added to property: 54dull@chefalicious.com
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] c.k.h.s.impl.PropertyServiceImpl - Category added to property: 2
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] c.k.h.s.impl.PropertyServiceImpl - Property saved: null
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] c.k.h.s.impl.PropertyServiceImpl - Valid attribute id: 16
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] c.k.h.s.impl.PropertyServiceImpl - Valid attribute id: 1
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] c.k.h.s.impl.PropertyServiceImpl - Valid attribute id: 2
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] c.k.h.s.impl.PropertyServiceImpl - Valid attribute id: 3
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] c.k.h.s.impl.PropertyServiceImpl - Valid attribute id: 6
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] c.k.h.s.impl.PropertyServiceImpl - Valid attribute id: 7
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] c.k.h.s.impl.PropertyServiceImpl - Valid attribute id: 8
+2025-05-11 10:39:32 INFO  [http-nio-8888-exec-1] c.k.h.s.impl.PropertyServiceImpl - Valid attribute id: 10
+2025-05-11 10:41:19 WARN  [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m1s157ms967µs800ns).
+2025-05-11 10:41:19 INFO  [kafka-coordinator-heartbeat-thread | renHome] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Group coordinator localhost:9094 (id: 2147483647 rack: null) is unavailable or invalid due to cause: session timed out without receiving a heartbeat response. isDisconnected: false. Rediscovery will be attempted.
+2025-05-11 10:41:19 INFO  [kafka-coordinator-heartbeat-thread | renHome] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Requesting disconnect from last known coordinator localhost:9094 (id: 2147483647 rack: null)
+2025-05-11 10:41:19 INFO  [kafka-coordinator-heartbeat-thread | renHome] o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-renHome-1, groupId=renHome] Client requested disconnect from node 2147483647
+2025-05-11 10:41:19 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Discovered group coordinator localhost:9094 (id: 2147483647 rack: null)
+2025-05-11 10:41:19 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Group coordinator localhost:9094 (id: 2147483647 rack: null) is unavailable or invalid due to cause: coordinator unavailable. isDisconnected: false. Rediscovery will be attempted.
+2025-05-11 10:41:19 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Requesting disconnect from last known coordinator localhost:9094 (id: 2147483647 rack: null)
+2025-05-11 10:41:19 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Discovered group coordinator localhost:9094 (id: 2147483647 rack: null)
+2025-05-11 10:41:19 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Attempt to heartbeat with Generation{generationId=671, memberId='consumer-renHome-1-c1d1ba1c-0f61-4f6e-a110-4af1beb5845d', protocol='range'} and group instance id Optional.empty failed due to UNKNOWN_MEMBER_ID, resetting generation
+2025-05-11 10:41:19 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Resetting generation and member id due to: encountered UNKNOWN_MEMBER_ID from HEARTBEAT response
+2025-05-11 10:41:19 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Request joining group due to: encountered UNKNOWN_MEMBER_ID from HEARTBEAT response
+2025-05-11 10:41:19 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Giving away all assigned partitions as lost since generation/memberID has been reset,indicating that consumer is in old state or no longer part of the group
+2025-05-11 10:41:19 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerRebalanceListenerInvoker - [Consumer clientId=consumer-renHome-1, groupId=renHome] Lost previously assigned partitions otp-topic-v1-0
+2025-05-11 10:41:19 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer - renHome: partitions lost: [otp-topic-v1-0]
+2025-05-11 10:41:19 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer - renHome: partitions revoked: [otp-topic-v1-0]
+2025-05-11 10:41:19 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] (Re-)joining group
+2025-05-11 10:41:19 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Request joining group due to: need to re-join with the given member-id: consumer-renHome-1-6124b49b-747d-4cec-b4a3-c35ddbc8675e
+2025-05-11 10:41:19 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] (Re-)joining group
+2025-05-11 10:41:22 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Successfully joined group with generation Generation{generationId=673, memberId='consumer-renHome-1-6124b49b-747d-4cec-b4a3-c35ddbc8675e', protocol='range'}
+2025-05-11 10:41:22 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Finished assignment for group at generation 673: {consumer-renHome-1-6124b49b-747d-4cec-b4a3-c35ddbc8675e=Assignment(partitions=[otp-topic-v1-0])}
+2025-05-11 10:41:22 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Successfully synced group in generation Generation{generationId=673, memberId='consumer-renHome-1-6124b49b-747d-4cec-b4a3-c35ddbc8675e', protocol='range'}
+2025-05-11 10:41:22 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Notifying assignor about the new Assignment(partitions=[otp-topic-v1-0])
+2025-05-11 10:41:22 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerRebalanceListenerInvoker - [Consumer clientId=consumer-renHome-1, groupId=renHome] Adding newly assigned partitions: otp-topic-v1-0
+2025-05-11 10:41:22 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerUtils - Setting offset for partition otp-topic-v1-0 to the committed offset FetchPosition{offset=53, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:9094 (id: 0 rack: null)], epoch=14}}
+2025-05-11 10:41:22 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer - renHome: partitions assigned: [otp-topic-v1-0]
+2025-05-11 10:41:42 INFO  [http-nio-8888-exec-1] c.k.h.s.impl.PropertyServiceImpl - Amenity added to property: 4
+2025-05-11 10:41:42 INFO  [http-nio-8888-exec-1] c.k.h.s.impl.PropertyServiceImpl - Property saved: 52
+2025-05-11 10:41:45 INFO  [http-nio-8888-exec-3] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:41:45 INFO  [http-nio-8888-exec-3] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:41:45 INFO  [http-nio-8888-exec-3] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:41:45 INFO  [http-nio-8888-exec-3] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:41:45 WARN  [http-nio-8888-exec-3] o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-05-11 10:41:45 INFO  [http-nio-8888-exec-2] c.k.h.config.CustomJwtDecoder - Validating token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NGR1bGxAY2hlZmFsaWNpb3VzLmNvbSIsImFjY291bnRJZCI6NCwic2NvcGUiOiJPV05FUiIsImlzcyI6ImRldiIsImV4cCI6MTc0Njk0Mzc1NywiaWF0IjoxNzQ2OTMzNzU3LCJqdGkiOiJmODQ5YjBiYy1kYzhkLTQxNWQtODQ0Zi02YWFjM2U5ZjlmMWIifQ.Nj_oh9VDpsq9nnYPB08p25NO82mSRquan17okpQNIRg
+2025-05-11 10:41:45 INFO  [http-nio-8888-exec-2] c.k.h.service.impl.AuthServiceImpl - Validate token func: true
+2025-05-11 10:41:45 INFO  [http-nio-8888-exec-2] c.k.h.config.CustomJwtDecoder - Token validation response: true
+2025-05-11 10:41:45 INFO  [http-nio-8888-exec-2] c.k.h.config.CustomJwtDecoder - Subject: 54dull@chefalicious.com
+2025-05-11 10:47:22 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-renHome-1, groupId=renHome] Node -1 disconnected.
+2025-05-11 10:57:22 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-renHome-1, groupId=renHome] Node -1 disconnected.
+2025-05-11 11:09:21 INFO  [MessageBroker-2] o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 3, active threads = 1, queued tasks = 1, completed tasks = 1]
+2025-05-11 11:39:21 INFO  [MessageBroker-3] o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 4, active threads = 1, queued tasks = 1, completed tasks = 2]
+2025-05-11 16:35:16 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-renHome-1, groupId=renHome] Node 2147483647 disconnected.
+2025-05-11 16:35:16 INFO  [kafka-coordinator-heartbeat-thread | renHome] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Group coordinator localhost:9094 (id: 2147483647 rack: null) is unavailable or invalid due to cause: coordinator unavailable. isDisconnected: true. Rediscovery will be attempted.
+2025-05-11 16:35:16 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Discovered group coordinator localhost:9094 (id: 2147483647 rack: null)
+2025-05-11 16:35:16 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Group coordinator localhost:9094 (id: 2147483647 rack: null) is unavailable or invalid due to cause: coordinator unavailable. isDisconnected: false. Rediscovery will be attempted.
+2025-05-11 16:35:16 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Requesting disconnect from last known coordinator localhost:9094 (id: 2147483647 rack: null)
+2025-05-11 16:35:16 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Discovered group coordinator localhost:9094 (id: 2147483647 rack: null)
+2025-05-11 16:35:24 WARN  [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4h49m3s854ms783µs500ns).
+2025-05-11 17:03:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-renHome-1, groupId=renHome] Node 2147483647 disconnected.
+2025-05-11 17:03:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-renHome-1, groupId=renHome] Disconnecting from node 0 due to request timeout.
+2025-05-11 17:03:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-renHome-1, groupId=renHome] Cancelled in-flight FETCH request with correlation id 9526 due to node 0 being disconnected (elapsed time since creation: 1578931ms, elapsed time since send: 1578931ms, throttle time: 0ms, request timeout: 30000ms)
+2025-05-11 17:03:10 INFO  [kafka-coordinator-heartbeat-thread | renHome] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Group coordinator localhost:9094 (id: 2147483647 rack: null) is unavailable or invalid due to cause: coordinator unavailable. isDisconnected: true. Rediscovery will be attempted.
+2025-05-11 17:03:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.clients.FetchSessionHandler - [Consumer clientId=consumer-renHome-1, groupId=renHome] Error sending fetch request (sessionId=320309064, epoch=8118) to node 0:
+org.apache.kafka.common.errors.DisconnectException: null
+2025-05-11 17:03:10 INFO  [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-renHome-1, groupId=renHome] Discovered group coordinator localhost:9094 (id: 2147483647 rack: null)
+2025-05-11 17:03:13 WARN  [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=26m48s791ms951µs600ns).

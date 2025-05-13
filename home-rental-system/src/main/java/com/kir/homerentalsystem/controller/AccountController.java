@@ -1,5 +1,6 @@
 package com.kir.homerentalsystem.controller;
 
+import com.kir.homerentalsystem.constant.AccountStatus;
 import com.kir.homerentalsystem.dto.ApiResponse;
 import com.kir.homerentalsystem.dto.request.AccountCreationRequest;
 import com.kir.homerentalsystem.dto.request.AccountUpdateRequest;
@@ -11,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -58,15 +61,17 @@ public class AccountController {
     }
 
 
-    @GetMapping("/admin/getAllAccounts")
-    public ApiResponse<Page<AccountResponse>> getAllAccount(
+    @GetMapping("/admin/getAllAccountsByRolesAndStatus")
+    public ApiResponse<Page<AccountResponse>> getAllAccountsByRolesAndStatus(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
-            @RequestParam(value = "sortBy", defaultValue = "accountId") String sortBy
+            @RequestParam(value = "sortBy", defaultValue = "accountId") String sortBy,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "roleNames") List<String> roleNames
 
     ){
         return ApiResponse.<Page<AccountResponse>>builder()
-                .result(accountService.getAllAccounts(page, size, sortBy))
+                .result(accountService.getAllAccountsByRolesAndStatus(page, size, sortBy, roleNames, status))
                 .build();
     }
 
@@ -89,4 +94,11 @@ public class AccountController {
                 .build();
     }
 
+    @PutMapping("/admin/bulkUpdateAccountStatus")
+    public ApiResponse<String> bulkUpdateAccountStatus(@RequestParam("ids") List<Long> ids,
+                                                       @RequestParam("status") String status) {
+        return ApiResponse.<String>builder()
+                .result(accountService.bulkUpdateAccountStatus(ids, status))
+                .build();
+    }
 }

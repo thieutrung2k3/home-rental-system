@@ -24,3 +24,6 @@ CREATE TABLE invalidated_token
     expiry_time TIMESTAMP
 );
 
+ALTER TABLE account DROP COLUMN status;
+ALTER TABLE account ADD COLUMN status VARCHAR(20) CHECK ( status in ('ACTIVE', 'INACTIVE', 'BANNED')) DEFAULT 'INACTIVE';
+

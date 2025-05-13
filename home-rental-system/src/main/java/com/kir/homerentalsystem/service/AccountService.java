@@ -26,7 +26,9 @@ public interface AccountService {
     void deleteMyAccount(); // WAITING
 
     //Admin
-    Page<AccountResponse> getAllAccounts(int page, int size, String sortBy);
+    Page<AccountResponse> getAllAccountsByRolesAndStatus(int page, int size, String sortBy, List<String> roleNames, String status);
+
+    String bulkUpdateAccountStatus(List<Long> ids, String status);
 
     void deleteAccount(Long id);
 

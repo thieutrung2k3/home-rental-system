@@ -1,5 +1,6 @@
 package com.kir.homerentalsystem.service.impl;
 
+import com.kir.homerentalsystem.constant.AccountStatus;
 import com.kir.homerentalsystem.constant.AuthEmailType;
 import com.kir.homerentalsystem.dto.request.LoginRequest;
 import com.kir.homerentalsystem.dto.request.LogoutRequest;
@@ -33,6 +34,8 @@ import com.nimbusds.jwt.SignedJWT;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
+import net.sourceforge.tess4j.Tesseract;
+import net.sourceforge.tess4j.TesseractException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
@@ -41,6 +44,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -67,6 +71,7 @@ public class AuthServiceImpl implements AuthService {
     private final RedisTemplate<String, Object> redisTemplate;
     private final PropertyRepository propertyRepository;
     private final TenantRepository tenantRepository;
+    private final Tesseract tesseract;
 
     @NonFinal
     @Value("${jwt.valid-duration}")
@@ -80,8 +85,14 @@ public class AuthServiceImpl implements AuthService {
     private String loginApiUrl;
 
     @Override
-    public String test(long num) {
-        return NumberUtil.readNumberByVietnamese(num);
+    public String test(String imagePath) {
+        try{
+            File file = new File(imagePath);
+            String result = tesseract.doOCR(file);
+            return result;
+        }catch (TesseractException e){
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
+        }
     }
 
     @Override
@@ -91,7 +102,7 @@ public class AuthServiceImpl implements AuthService {
         if (!passwordEncoder.matches(request.getPassword(), account.getPassword())) {
             throw new AppException(ErrorCode.PASSWORD_INVALID);
         }
-        if (!account.getIsActive()) {
+        if (!account.getStatus().equals(AccountStatus.ACTIVE.name())) {
             throw new AppException(ErrorCode.ACCOUNT_NOT_ACTIVATED);
         }
         return LoginResponse.builder()
@@ -192,7 +203,7 @@ public class AuthServiceImpl implements AuthService {
                 Account account = accountRepository.findByEmail(email)
                         .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_EXISTED));
 
-                if (account.getIsActive()) {
+                if (account.getStatus().equals(AccountStatus.ACTIVE.name())) {
                     throw new AppException(ErrorCode.ACCOUNT_ACTIVATION_CONFLICT);
                 }
 
@@ -202,7 +213,7 @@ public class AuthServiceImpl implements AuthService {
                 }
 
                 redisTemplate.opsForValue().getOperations().delete(email);
-                account.setIsActive(true);
+                account.setStatus(AccountStatus.ACTIVE.name());
 
                 accountRepository.save(account);
                 return accountMapper.toAccountResponse(account);

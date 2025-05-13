@@ -10,8 +10,15 @@ import java.util.Optional;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
     Page<Account> findAll(Pageable pageable);
+
+    Page<Account> findAllByRole_NameInAndStatus(Pageable pageable, List<String> roleNames, String status);
+
+    Page<Account> findAllByRole_NameIn(Pageable pageable, List<String> roleNames);
+
     Optional<Account> findByEmail(String email);
+
     boolean existsByEmail(String email);
+
     List<Account> findByEmailContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(
             String email, String firstName, String lastName);
 

@@ -1,5 +1,6 @@
 package com.kir.homerentalsystem.entity;
 
+import com.kir.homerentalsystem.constant.AccountStatus;
 import com.kir.homerentalsystem.constant.IdNumberType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -60,8 +61,8 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private IdNumberType idNumberType;
 
-    @Column(name = "is_active")
-    private Boolean isActive = false;
+    @Column(name = "status")
+    private String status = AccountStatus.INACTIVE.name();
     
     @Column(name = "created_at")
     private LocalDateTime createdAt;

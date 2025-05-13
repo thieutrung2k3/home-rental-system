@@ -1,5 +1,6 @@
 package com.kir.homerentalsystem.service.impl;
 
+import com.kir.homerentalsystem.constant.AccountStatus;
 import com.kir.homerentalsystem.constant.AuthEmailType;
 import com.kir.homerentalsystem.dto.request.SendSimpleEmailRequest;
 import com.kir.homerentalsystem.entity.Account;
@@ -95,7 +96,7 @@ public class EmailServiceImpl implements EmailService {
         switch (type) {
             case REGISTER -> {
                 // Kiểm tra xem tài khoản đã được kích hoạt chưa, nếu đã kích hoạt thì ném ngoại lệ
-                if (account.getIsActive()) {
+                if (account.getStatus().equals(AccountStatus.ACTIVE.name())) {
                     throw new AppException(ErrorCode.ACCOUNT_ACTIVATION_CONFLICT);
                 }
                 // Tạo mã OTP ngẫu nhiên

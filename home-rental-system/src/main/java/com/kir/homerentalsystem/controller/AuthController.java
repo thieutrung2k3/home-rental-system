@@ -20,7 +20,7 @@ public class AuthController {
     private final AccountService accountService;
 
     @GetMapping("/public/test")
-    public ApiResponse<String> test(@RequestParam("num") long num) {
+    public ApiResponse<String> test(@RequestBody String num) {
        return ApiResponse.<String>builder()
                 .result(authService.test(num))
                 .build();

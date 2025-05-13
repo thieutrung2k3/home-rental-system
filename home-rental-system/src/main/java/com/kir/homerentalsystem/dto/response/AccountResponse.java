@@ -21,8 +21,8 @@ public class AccountResponse {
     String firstName;
     String lastName;
     String phoneNumber;
-    Boolean isActive;
-    Role role;
+    String status;
+    String roleName;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
 

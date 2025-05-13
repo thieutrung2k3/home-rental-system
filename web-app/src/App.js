@@ -21,6 +21,7 @@ import { isTokenExpired, logout, getAuthToken } from "./utils/auth";
 import "./App.css";
 import CreateProperty from "./components/Property/CreateProperty";
 import UpdateProperty from "./components/Property/UpdateProperty";
+import Admin from "./pages/Admin/Admin";
 
 // AuthChecker component - kiểm tra token hết hạn
 function AuthChecker({ children }) {
@@ -115,6 +116,16 @@ function App() {
           <Route
             path='/reset-password'
             element={<ResetPasswordConfirm />}
+          />
+
+          {/* Admin Dashboard routes */}
+          <Route
+            path='/admin/*'
+            element={
+              <PrivateRoute allowedRoles={["ADMIN"]}>
+                <Admin />
+              </PrivateRoute>
+            }
           />
 
           {/* Owner Dashboard routes */}
