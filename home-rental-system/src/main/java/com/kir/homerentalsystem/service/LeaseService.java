@@ -10,11 +10,17 @@ import java.util.List;
 
 public interface LeaseService {
     void startLease(LeaseCreationRequest request);
+
     boolean canBePrebooked(Long propertyId, LocalDate startDate);
+
     LeaseResponse createPrebookedLease(LeaseCreationRequest request);
+
     void activePrebookedLease();
+
     LeaseResponse createLease(LeaseCreationRequest request);
+
     void updateLeaseStatus(Long leaseId, LeaseStatus status);
+
     List<LeaseResponse> getLeasesByStatusAndOwner(Long ownerId, LeaseStatus status);
 
     ExportFileResponse exportLease(Long leaseId);

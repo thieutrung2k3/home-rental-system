@@ -2,12 +2,10 @@ package com.kir.homerentalsystem.controller;
 
 import com.kir.homerentalsystem.dto.ApiResponse;
 import com.kir.homerentalsystem.dto.request.VerifyOwnerRequest;
+import com.kir.homerentalsystem.dto.response.StatisticsResponse;
 import com.kir.homerentalsystem.service.OwnerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,5 +17,12 @@ public class OwnerController {
     public ApiResponse<Void> verifyOwner(@RequestBody VerifyOwnerRequest request) {
         ownerService.verifyOwner(request);
         return ApiResponse.<Void>builder().build();
+    }
+
+    @GetMapping("/owner/getStatistics")
+    public ApiResponse<StatisticsResponse> getStatistics(){
+        return ApiResponse.<StatisticsResponse>builder()
+                .result(ownerService.getStatistics())
+                .build();
     }
 }

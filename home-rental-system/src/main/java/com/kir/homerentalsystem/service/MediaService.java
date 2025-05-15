@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface MediaService {
     List<String> uploadImages(MultipartFile[] file);
+
     String uploadImage(MultipartFile file);
 }

@@ -12,8 +12,14 @@ import java.util.Optional;
 
 public interface PropertyRepository extends JpaRepository<Property, Long>, JpaSpecificationExecutor<Property> {
     Optional<Property> findByOwner_Account_Email(String email);
+
     Page<Property> findAllByOwner_Account_Email(Pageable pageable, String email);
+
     Page<Property> findAll(Pageable pageable);
+
     Page<Property> findAllByCategory_CategoryId(Pageable pageable, Long categoryId);
+
     Page<Property> findAllByLocation_LocationId(Pageable pageable, Long locationId);
+
+    int countPropertiesByIsAvailableAndOwner_Account_Email(Boolean isAvailable, String email);
 }
